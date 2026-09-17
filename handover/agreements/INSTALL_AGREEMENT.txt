@@ -1,31 +1,54 @@
-AI EMPLOYEE INSTALL AGREEMENT (ONE PAGE)
-Not a guarantee of revenue.
+AI WORKFLOW INSTALL AGREEMENT (ONE PAGE)
+Not legal advice. Not a guarantee of revenue.
 
 Date: ______________
 Buyer: ______________
-Installer: Jay Money / [desk]
-System being installed: ______________
-Demo shown on: ______________
+Installer: Cashrail / ______________
+Named workflow/job: ______________
+Demo reference shown before sale: ______________
 
-1. Week-one deliverable
-One named job live: ______________
-Scoreboard: attempts / replies / outputs / blocked items
-Human YES required before anything sends or spends
+1. DEMONSTRATED JOB
+One-sentence job the workflow performs today:
+____________________________________________________________
 
-2. Money (circle)
-  Setup $________ due before install
-  Monthly $________ starting day 30
-  Performance ______% of measured [savings / collected cash] the job can prove for 90 days
-No ads bought on Installer's card unless a separate written cap exists.
+The sale is for this bounded workflow, not "automate the whole company."
 
-3. What this is not
-Not a promise of $________ in 72 hours.
-Not a license to fake testimonials.
-Not access to Buyer's bank.
+2. WEEK-ONE DELIVERABLE
+By the agreed acceptance date, Buyer receives:
+- the named workflow/job live in the agreed environment;
+- the inspectable output: ______________
+- a scoreboard for relevant operating events;
+- a written human-approval boundary for sending, spending, signing, payment-routing changes, and other high-consequence actions.
 
-4. Stop
-Buyer can stop monthly with 14 days notice.
-Setup is earned after the named job is live.
+3. INPUTS / PROVIDERS
+Authorized inputs: ______________
+Authorized connected providers/accounts: ______________
+No credential-sharing workaround is implied by this agreement.
+
+4. EVIDENCE STANDARD
+Where the scoreboard claims source research, provider sends, or monetary value, the workflow uses inspectable evidence appropriate to that claim.
+Manual assertions remain labeled unverified.
+
+5. MONEY
+Setup: $________
+Recurring support/management: $________ starting ______________
+Optional performance component: ______% of specifically defined and verifiable __________________ for ______ days.
+
+Performance compensation applies only to value that both sides can substantiate under the agreed measurement method: ______________
+
+No ads or other spend on Installer's card unless separately authorized in writing with a cap.
+
+6. WHAT THIS IS NOT
+- not a guarantee of a revenue number or overnight result;
+- not authorization to fabricate proof/testimonials;
+- not access to Buyer's bank or unrelated systems;
+- not permission to exceed the demonstrated/agreed job silently.
+
+7. ACCEPTANCE / STOP
+Week-one acceptance test: ______________
+Setup is earned according to: ______________
+Recurring service may be stopped with ______ days written notice.
+Data/access offboarding steps: ______________
 
 Buyer / date: ____________________
 Installer / date: ____________________

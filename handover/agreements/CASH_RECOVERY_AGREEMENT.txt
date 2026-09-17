@@ -1,34 +1,50 @@
-B2B CASH RECOVERY AGREEMENT (ONE PAGE)
-Not legal advice. Not a law-firm retainer. Not consumer collections.
+STALLED PROPOSAL RECOVERY AGREEMENT (ONE PAGE)
+Historical path: CASH_RECOVERY_AGREEMENT.txt
+Not legal advice. This agreement does NOT authorize third-party debt collection.
 
 Date: ______________
 Client: ______________
-Vendor: Jay Money / [desk]
+Cashrail / service provider: ______________
 
-1. Scope (circle)
-  A. Past-due B2B invoices Client already issued
-  B. Stalled proposals Client already sent
+1. SCOPE
+Only B2B proposals / quotes that Client sent before this engagement.
 
-2. Files
-Client pastes a list: name, amount, date, last contact.
-No bank login required.
-Vendor does not collect consumer household debt.
+Third-party collection of past-due invoices (historical L7A) is PAUSED and is not included in this agreement.
 
-3. Method
-Written templates Client approves.
-Sends from Client's approved mailbox or Client sends and Vendor runs the board.
-No legal threats, no impersonation of courts or police, no harassment.
+2. CLIENT INPUT
+Client supplies a redacted list sufficient to establish:
+- account / proposal identifier
+- proposal amount
+- date sent
+- last response / known status
+- evidence the proposal predates this engagement
 
-4. Pay
-A: ______% of invoice cash that lands after this date on accounts older than 30 days (default 20%).
-B: ______% of the first payment on already-sent quotes that close within 45 days (default 25%).
-$0 if nothing recovers.
-Paid within 7 days of cleared funds.
+No bank login is required.
 
-5. Stop
-Either side can stop in writing.
-Debtor "stop" requests are honored on that thread.
-Already-recovered cash still pays.
+3. METHOD
+Cashrail builds the recovery board, research, follow-up drafts, and approved workflow.
+Messages use Client's authorized channel/provider or another expressly approved sending path.
+Cashrail does not impersonate courts, law enforcement, or an employee role that has not been truthfully authorized.
+Stop/unsubscribe requests are honored and logged.
+
+4. CUSTOMER PAYMENT PATH
+The customer pays Client through Client's existing checkout/invoice/payment method.
+Cashrail does not receive customer settlement proceeds and forward them to Client.
+
+5. ATTRIBUTION + PAY
+Cashrail earns ______% of the first cleared customer payment on eligible pre-existing proposals that close within ______ days after the engagement starts.
+Default historical reference if both sides choose it: 25% / 45 days.
+
+A fee is earned only when the proposal is attributable under the agreed board and Client has external payment evidence.
+Client pays Cashrail within ______ days after applicable customer funds clear.
+
+6. PROOF
+Client provides enough settlement evidence to verify the attributable first payment without exposing unrelated financial data.
+A manual dashboard entry is not payment proof.
+
+7. STOP
+Either side may stop new work in writing.
+Already-attributed opportunities follow only the trailing terms written here: ______________
 
 Client / date: ____________________
-Vendor / date: ____________________
+Cashrail / date: ____________________

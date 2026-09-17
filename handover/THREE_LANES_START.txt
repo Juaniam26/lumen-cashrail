@@ -1,0 +1,35 @@
+THREE LANES — START HERE
+Not real estate. Bot drafts. You sign.
+
+OPEN THESE CHATS
+07_CASH_RECOVERY.txt
+08_SPLIT_CLOSER.txt
+09_INSTALL_SELLER.txt
+Plus the old 00_REVENUE_DESK.txt if you want one coordinator. Tell the desk the only active lanes are 7, 8, 9.
+
+DEFAULT LOAD
+Hours 0–18: Lane 8 + Lane 7 lists
+Lane 9: ONLY after you paste a one-sentence demo into that chat
+If Lane 9 has no demo, it stays parked. Do not pitch vapor.
+
+YOU APPROVE
+First-touch templates
+Any send
+Any agreement
+Any mailbox the recovery lane wants to use
+
+AGREEMENTS
+agreements/CASH_RECOVERY_AGREEMENT.txt
+agreements/SPLIT_CLOSE_AGREEMENT.txt   (already in the kit)
+agreements/INSTALL_AGREEMENT.txt
+
+MONEY RULES
+$0 ads
+No fake overnight posts
+No consumer debt
+No "the bot is a realtor"
+Lane 9 does not exist without a demo
+
+SANE TARGET
+Signed paper this week. First cash when a recovered invoice or a close lands.
+Stretch remains a stretch. Do not write it on a pitch email.

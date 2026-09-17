@@ -1,0 +1,53 @@
+72-HOUR $0-CAPITAL REVENUE DESK
+HANDOVER KIT
+Owner: Jay Money
+Window: 72 hours from go
+Stretch target: $20,000–$30,000 collected cash
+Operating rule: $0 out of pocket until profit
+Reality check: stretch is a target, not a forecast
+
+WHAT IS IN THIS KIT
+1. Revenue_Desk_Playbook.docx     — full manual (read this)
+2. Revenue_Desk_Tracker.xlsx      — live scoreboard + lists
+3. bots/                          — paste-ready job packets (one per bot)
+4. agreements/                    — one-page deals to send
+5. scripts/                       — first-touch copy library
+
+HOW TO HAND THIS OVER (10 MINUTES)
+1. Open the playbook. Read pages "Rules" and "Human job" yourself.
+2. Create 6 bots / 6 chats:
+   - Revenue Desk (coordinator)
+   - Lane 1 Split-Close
+   - Lane 2 Waste-Share
+   - Lane 3 Data Mill
+   - Lane 4 Bounty Sprint
+   - Lane 5 Distro Split
+3. Paste the matching file from bots/ as the first message in each chat.
+4. Open the tracker. Fill the yellow cells on tab SETUP.
+5. Do not run all five lanes at full blast. Default load:
+   Desk + Lane 3 + Lane 5 for first cash
+   Desk + Lane 1 + Lane 2 for a fat check
+   Lane 4 as a side lottery ticket only
+6. You approve sends, signatures, and anything that spends money.
+7. Every 4 hours the Desk must fill a row on tab REPORTS.
+
+DO NOT
+- Buy ads, inventory, or a trading wallet
+- Post fake earnings or fake testimonials
+- Impersonate a brand
+- Bill anyone before a written yes
+- Tell a bot its existence depends on the number
+
+START LANE ORDER IF YOU ARE ALONE
+Hour 0: Desk + Lane 3 (product live by hour 8)
+Hour 2: Lane 5 (two rev-share pitches in parallel)
+Hour 6: Lane 1 if Lane 3/5 are moving; else dump more hours into whichever has replies
+Lane 2 starts when you can hop on a 15-minute audit call
+Lane 4 runs in leftover compute only
+
+LANE 6 ADDED
+6. bots/06_CO_LIST_SAVAGE.txt     — co-list worker (licensed path)
+   agreements/CO_LIST_WORKSHEET.txt
+   scripts/CO_LIST_SCRIPTS.txt
+   tracker tab L6_CO_LIST + SETUP rows 27-33
+If you have no SC license, this bot drafts only. It does not list houses.

@@ -1,53 +1,86 @@
-72-HOUR $0-CAPITAL REVENUE DESK
-HANDOVER KIT
-Owner: Jay Money
-Window: 72 hours from go
-Stretch target: $20,000–$30,000 collected cash
-Operating rule: $0 out of pocket until profit
-Reality check: stretch is a target, not a forecast
+LUMEN CASHRAIL — START HERE
+Canonical runtime: config/revenue-runtime.json
+Default spend: $0 out of pocket until verified profit
 
-WHAT IS IN THIS KIT
-1. Revenue_Desk_Playbook.docx     — full manual (read this)
-2. Revenue_Desk_Tracker.xlsx      — live scoreboard + lists
-3. bots/                          — paste-ready job packets (one per bot)
-4. agreements/                    — one-page deals to send
-5. scripts/                       — first-touch copy library
+THIS REPO'S JOB
+Cashrail is a revenue operating tenant / policy kit for Lumen.
+This repository does not contain the full Lumen application, database, payment webhook service, or provider-backed outbound implementation.
+Never turn a local status into proof that an external action happened.
 
-HOW TO HAND THIS OVER (10 MINUTES)
-1. Open the playbook. Read pages "Rules" and "Human job" yourself.
-2. Create 6 bots / 6 chats:
-   - Revenue Desk (coordinator)
-   - Lane 1 Split-Close
-   - Lane 2 Waste-Share
-   - Lane 3 Data Mill
-   - Lane 4 Bounty Sprint
-   - Lane 5 Distro Split
-3. Paste the matching file from bots/ as the first message in each chat.
-4. Open the tracker. Fill the yellow cells on tab SETUP.
-5. Do not run all five lanes at full blast. Default load:
-   Desk + Lane 3 + Lane 5 for first cash
-   Desk + Lane 1 + Lane 2 for a fat check
-   Lane 4 as a side lottery ticket only
-6. You approve sends, signatures, and anything that spends money.
-7. Every 4 hours the Desk must fill a row on tab REPORTS.
+CURRENT LOAD
+ACTIVE
+- Signal Intelligence / L3 commercial-trigger intelligence
+- Partner Revenue Engine / merged L1 + L8
+- Stalled Proposal Recovery / L7B
 
-DO NOT
-- Buy ads, inventory, or a trading wallet
-- Post fake earnings or fake testimonials
-- Impersonate a brand
-- Bill anyone before a written yes
-- Tell a bot its existence depends on the number
+ACTIVE SUPPORT
+- Account Mapping / shared research + enrichment
+- Outbound Distribution / L5, prioritizing Lumen/Cashrail-owned offers
 
-START LANE ORDER IF YOU ARE ALONE
-Hour 0: Desk + Lane 3 (product live by hour 8)
-Hour 2: Lane 5 (two rev-share pitches in parallel)
-Hour 6: Lane 1 if Lane 3/5 are moving; else dump more hours into whichever has replies
-Lane 2 starts when you can hop on a 15-minute audit call
-Lane 4 runs in leftover compute only
+BUILD — DO NOT PITCH WITHOUT DEMO
+- L9 AI Workflow Install
 
-LANE 6 ADDED
-6. bots/06_CO_LIST_SAVAGE.txt     — co-list worker (licensed path)
-   agreements/CO_LIST_WORKSHEET.txt
-   scripts/CO_LIST_SCRIPTS.txt
-   tracker tab L6_CO_LIST + SETUP rows 27-33
-If you have no SC license, this bot drafts only. It does not list houses.
+EXPERIMENTAL / LOW RESOURCE
+- L2 Waste Share
+
+OPPORTUNISTIC ONLY
+- L4 posted bounties / contests
+
+PAUSED
+- L7A third-party invoice collection — compliance design required before activation
+
+DISABLED
+- L6 real estate
+
+TRUTH RULES
+1. Source claim: preserve source URL/provider record + retrieval time + observed fact.
+2. No live evidence: BLOCKED_NO_LIVE_SOURCE. Do not fabricate research.
+3. Drafted or copied email != sent.
+4. Verified send requires provider message id / provider acceptance evidence.
+5. Manually entered money != verified cash.
+6. Verified cash requires transaction / settlement evidence.
+7. Refunds and direct costs stay visible; do not rewrite history.
+
+MONEY MODEL
+Net contribution = verified gross cash
+- partner payouts
+- payment fees
+- attributable data/outbound/model costs
+- refunds
+- other directly attributable costs
+
+PARTNER SALES PAYMENT PATH
+Customer pays Partner through Partner's checkout/invoice.
+Partner pays Cashrail the agreed commission after cleared attributable funds.
+Cashrail does not receive customer settlement for a third party and forward it onward.
+
+HOW TO ALLOCATE WORK
+Do not kill a lane because a clock hit 18 hours.
+Diagnose the funnel:
+- delivered / no replies -> list, sender, channel, copy
+- replies / no qualified -> targeting or offer
+- qualified / no signed -> trust, proof, pricing, agreement
+- signed / no cash -> closing, attribution, fulfillment, payment path
+Move effort toward observed net contribution and credible path to verified cash.
+
+FIRST OPERATING PASS
+1. L3: produce one evidence-backed commercial-trigger brief with real sources.
+2. Partner Revenue: identify proven partner offers; do not contact their buyers until partner terms and attribution are approved.
+3. L7B: target stalled B2B proposals only; client keeps its payment path.
+4. L5: distribute owned offers first; third-party products require attribution and owner checkout.
+5. L9: build one narrow demo before any pitch.
+6. Keep L7A and L6 off.
+
+PROVIDER STATE AT AUDIT
+Apollo: research/prospecting available; outbound NOT READY because no linked sending mailbox was returned.
+Do not report Apollo sends until sender setup and provider evidence exist.
+
+READ NEXT
+- docs/EVENT_LEDGER_CONTRACT.md
+- docs/COMPLIANCE_BOUNDARIES.md
+- docs/INTEGRATION_GAPS.md
+- handover/bots/00_REVENUE_DESK.txt
+
+DEFINITION OF DONE
+Not activity. Not a draft. Not a dashboard number.
+Done means externally evidenced movement through the funnel, ending in verified payment and net contribution when revenue lands.

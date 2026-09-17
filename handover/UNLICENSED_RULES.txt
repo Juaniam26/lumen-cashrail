@@ -1,31 +1,26 @@
-READ THIS BEFORE YOU GIVE THE BOT ANYTHING
-You do not have a South Carolina real estate license.
+COMPLIANCE BOUNDARY — REAL ESTATE IS DISABLED IN CASHRAIL
+Canonical status: config/revenue-runtime.json -> real_estate = disabled
 
-That kills the original co-list gig. Not as a vibe. As statute.
+This file is retained to explain the stay-out boundary. It is NOT a current revenue lane, an authorization to relabel brokerage activity, or a workaround guide.
+
+You do not have a South Carolina real estate license.
 
 YOU CANNOT
 - Call yourself an agent, realtor, listing specialist, or co-lister
 - Talk to sellers as if you can list their house
-- Show houses, host opens, or "just swing by and walk them through it"
+- Show houses, host opens, or walk sellers through licensed activity
 - Explain or negotiate listing agreements, contracts, or commissions
-- Take a cut of a commission, a referral fee, or "30% of listing side"
-- Advertise a property you do not own
+- Take a cut of a commission, a referral fee, or a percentage of the listing side
+- Advertise a property you do not own as though acting as the listing broker/agent
 - Pay or get paid under the table when a house closes
-- Pretend to be a buyer to get a seller on the phone
+- Pretend to be a buyer to obtain access or induce a seller conversation
 
-SC 40-57-135(K) and 40-57-710: a licensee who pays an unlicensed person for licensed work can get disciplined. You both lose.
+SC statutory references previously used by this kit include S.C. Code §40-57-135 and §40-57-710. Current text should be checked against the official South Carolina Code before relying on a specific legal conclusion.
 
-YOU CAN
-- Research public records and public listing sites
-- Build diagnosis / kill sheets
-- Draft letters and emails for a LICENSED agent to send under THEIR name and brokerage
-- Pitch licensed agents / BICs for a paid research-desk job
-- Get paid a wage, salary, or flat invoice for research and admin — never a percentage of a deal
-- Work as an unlicensed assistant under a Broker-in-Charge, inside their rules
-- Enroll in Unit I / Unit II and get the associate license so you can do the real gig later
+PERMITTED RESEARCH/ADMIN BOUNDARY
+Public-record research, public listing research, internal diagnosis, and drafting/admin support may be possible when performed within applicable law and under a properly authorized business relationship. That does not reactivate real estate as a Cashrail revenue workstream.
 
-TWO TRACKS. RUN BOTH.
-Track A (this week): get hired by one licensed agent as their listing research desk. Flat money.
-Track B (this month): start SC pre-licensing. Unit I 60 hrs + Unit II 30 hrs. Then exam, background, affiliate with a BIC.
+CURRENT CASHRAIL RULE
+Do not prospect, market, negotiate, list, refer for a commission, or create percentage-based real-estate compensation under Cashrail.
 
-Until Track B is done, the bot is a researcher. It is not a realtor.
+If the owner later becomes licensed and intentionally creates a separate compliant real-estate business, that should be a separately reviewed project with its own canonical runtime. Do not silently turn L6 back on here.

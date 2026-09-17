@@ -1,0 +1,148 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Juaniam26/lumen-cashrail/schemas/revenue-event.schema.json",
+  "title": "Cashrail Revenue Event",
+  "type": "object",
+  "required": [
+    "event_id",
+    "event_type",
+    "occurred_at",
+    "tenant",
+    "workstream",
+    "opportunity_id",
+    "verification"
+  ],
+  "properties": {
+    "event_id": {"type": "string", "minLength": 1},
+    "event_type": {
+      "type": "string",
+      "enum": [
+        "opportunity.discovered",
+        "evidence.verified",
+        "message.drafted",
+        "message.approved",
+        "message.provider_accepted",
+        "message.delivered",
+        "message.failed",
+        "message.replied",
+        "message.unsubscribed",
+        "lead.qualified",
+        "agreement.signed",
+        "payment.pending",
+        "payment.verified",
+        "payment.refunded",
+        "cost.recorded",
+        "opportunity.killed"
+      ]
+    },
+    "occurred_at": {"type": "string", "format": "date-time"},
+    "tenant": {"const": "Cashrail"},
+    "workstream": {"type": "string", "minLength": 1},
+    "opportunity_id": {"type": "string", "minLength": 1},
+    "campaign_id": {"type": ["string", "null"]},
+    "actor": {
+      "type": "object",
+      "properties": {
+        "type": {"type": "string", "enum": ["human", "agent", "provider", "system"]},
+        "id": {"type": "string"}
+      },
+      "required": ["type"],
+      "additionalProperties": false
+    },
+    "verification": {
+      "type": "object",
+      "required": ["status"],
+      "properties": {
+        "status": {"type": "string", "enum": ["verified", "unverified", "rejected"]},
+        "verified_at": {"type": ["string", "null"], "format": "date-time"},
+        "method": {"type": ["string", "null"]}
+      },
+      "additionalProperties": false
+    },
+    "evidence": {
+      "type": "object",
+      "properties": {
+        "source_url": {"type": ["string", "null"], "format": "uri"},
+        "source_record_id": {"type": ["string", "null"]},
+        "retrieved_at": {"type": ["string", "null"], "format": "date-time"},
+        "observed_fact": {"type": ["string", "null"]}
+      },
+      "additionalProperties": true
+    },
+    "provider": {
+      "type": "object",
+      "properties": {
+        "name": {"type": ["string", "null"]},
+        "message_id": {"type": ["string", "null"]},
+        "accepted_at": {"type": ["string", "null"], "format": "date-time"},
+        "recipient": {"type": ["string", "null"]}
+      },
+      "additionalProperties": true
+    },
+    "payment": {
+      "type": "object",
+      "properties": {
+        "provider": {"type": ["string", "null"]},
+        "transaction_id": {"type": ["string", "null"]},
+        "currency": {"type": ["string", "null"]},
+        "gross_amount": {"type": ["number", "null"]},
+        "fees": {"type": ["number", "null"]},
+        "refunds": {"type": ["number", "null"]},
+        "net_amount": {"type": ["number", "null"]}
+      },
+      "additionalProperties": true
+    },
+    "cost": {
+      "type": "object",
+      "properties": {
+        "category": {"type": "string"},
+        "amount": {"type": "number"},
+        "currency": {"type": "string"}
+      },
+      "required": ["category", "amount", "currency"],
+      "additionalProperties": false
+    },
+    "metadata": {"type": "object"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"event_type": {"const": "message.provider_accepted"}}},
+      "then": {
+        "required": ["provider"],
+        "properties": {
+          "provider": {
+            "required": ["name", "message_id", "accepted_at", "recipient"]
+          },
+          "verification": {
+            "properties": {"status": {"const": "verified"}}
+          }
+        }
+      }
+    },
+    {
+      "if": {"properties": {"event_type": {"const": "payment.verified"}}},
+      "then": {
+        "required": ["payment"],
+        "properties": {
+          "payment": {"required": ["provider", "transaction_id", "gross_amount"]},
+          "verification": {
+            "properties": {"status": {"const": "verified"}}
+          }
+        }
+      }
+    },
+    {
+      "if": {"properties": {"event_type": {"const": "evidence.verified"}}},
+      "then": {
+        "required": ["evidence"],
+        "properties": {
+          "evidence": {"required": ["retrieved_at", "observed_fact"]},
+          "verification": {
+            "properties": {"status": {"const": "verified"}}
+          }
+        }
+      }
+    }
+  ],
+  "additionalProperties": false
+}

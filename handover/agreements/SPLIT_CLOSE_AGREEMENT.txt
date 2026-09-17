@@ -1,45 +1,49 @@
-SPLIT CLOSE AGREEMENT (ONE PAGE)
-Fill blanks. Both sides keep a copy. Not legal advice — short operating deal.
+PARTNER REVENUE AGREEMENT (ONE PAGE)
+Historical path: SPLIT_CLOSE_AGREEMENT.txt
+Not legal advice. Fill blanks. Both sides keep a copy.
 
 Date: ______________
 Partner name / company: ______________
 Partner contact: ______________
-Hunter name / company: Jay Money / [bot team]
-Hunter contact: ______________
+Cashrail / service provider: ______________
+Cashrail contact: ______________
 
-1. Offer being sold
-Name: ______________
+1. PARTNER OFFER
+Offer: ______________
 Price / typical ticket: ______________
-Checkout or invoice path: ______________
-What counts as a qualified buyer: budget, timeline, fit = ______________
+Partner checkout / invoice / booking path: ______________
+Qualified buyer rule: ______________
 
-2. Hunter job
-Research and outreach using only copy Partner approves.
-Book qualified buyers onto Partner's calendar or approved booking link.
-Do not spend Partner money.
-Do not contact a name on Partner's existing pipeline if Partner flags it first.
+Partner represents that it owns or is authorized to sell and fulfill this offer.
 
-3. Pay
-Hunter earns ______% of cash collected from buyers Hunter sourced,
-for the first ______ days after that buyer's first payment (default 90).
-Paid within 7 days of cleared funds.
-Hunter is not paid for Partner's pre-existing pipeline.
-If a sourced buyer expands later inside the window, the same % applies.
+2. CASHRAIL JOB
+Cashrail researches prospective buyers and runs only the outreach/qualification activity authorized under this engagement.
+Cashrail does not change Partner's product, make unsupported claims, or spend Partner/Cashrail money unless separately approved in writing.
 
-4. Proof of source
-Unique link, UTM, intro email, or written "this came from Hunter" on the booking.
-Disputes: if unclear, both sides review the thread in good faith within 5 days.
+3. CUSTOMER PAYMENT PATH
+The buyer contracts with and pays Partner through Partner's normal checkout/invoice/payment path.
+Cashrail does not receive the buyer's settlement proceeds for Partner's product or service and forward them to Partner.
 
-5. Brand
-Hunter may use Partner name only as approved in writing.
-No fake testimonials.
+4. ATTRIBUTION
+A sourced buyer counts only when attribution is inspectable through an agreed method such as unique link/UTM, provider campaign/contact id, intro thread, booking-source field, or written acknowledgement.
+Partner's pre-existing pipeline is excluded unless specifically listed here: ______________
 
-6. Stop
-Either side can stop with written notice.
-Work already in flight still pays if it closes within 30 days after stop.
+5. CASHRAIL COMPENSATION
+Cashrail earns ______% of cleared attributable revenue actually received by Partner from sourced buyers for ______ days after the buyer's first payment.
+Default timing, if agreed: Partner remits Cashrail's earned commission within 7 days after the applicable customer funds clear.
+Refunds/chargebacks reduce the attributable base to the extent they reverse the underlying customer revenue.
 
-7. $0 spend
-Neither side is required to buy ads. If ads happen, they are a separate written deal.
+6. PROOF / RECONCILIATION
+Partner provides enough payment/settlement evidence to substantiate attributed cleared revenue without exposing unrelated sensitive account data.
+Cashrail records its own commission as verified only after remittance/settlement evidence exists.
+
+7. BRAND / COMPLIANCE
+Cashrail uses Partner's name/brand only as authorized in writing.
+No fake testimonials, fake case studies, impersonation, or regulated fee-sharing arrangement that has not been separately approved for the relevant profession/jurisdiction.
+
+8. STOP
+Either side may stop new work with written notice.
+Attributed opportunities already in flight remain payable only for the trailing window agreed here: ______ days.
 
 Partner signature / date: ____________________
-Hunter signature / date: ____________________
+Cashrail signature / date: ____________________

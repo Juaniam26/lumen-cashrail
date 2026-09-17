@@ -1,37 +1,50 @@
-DISTRIBUTION REV-SHARE AGREEMENT (ONE PAGE)
-Fill blanks. Both sides keep a copy. Not legal advice.
+THIRD-PARTY DISTRIBUTION REV-SHARE AGREEMENT (ONE PAGE)
+Historical path: DISTRO_SPLIT_AGREEMENT.txt
+Not legal advice. Use only when Cashrail distributes a third party's live offer.
+
+Cashrail's default distribution priority is Lumen/Cashrail-owned offers, which do not require this partner agreement.
 
 Date: ______________
-Owner name / company: ______________
-Distributor: Jay Money / [bot team]
+Product owner / company: ______________
+Distributor: Cashrail / ______________
 
-1. Product
+1. PRODUCT
 Name: ______________
-Checkout URL: ______________
+Owner-controlled checkout URL: ______________
 Price: ______________
+Owner confirms the product/service is live and Owner controls fulfillment/support.
 
-2. Job
-Distributor creates and runs public distribution (X, allowed Reddit, short posts, reply threads).
-Distributor does not change the product or support customers.
+2. JOB
+Cashrail creates/runs approved distribution through agreed channels.
+Cashrail does not change the product, fabricate proof, or assume customer support obligations unless separately written.
 
-3. Attribution
-Owner provides unique links or codes before any posting.
-Only sales on those links/codes count.
+3. ATTRIBUTION
+Owner provides an inspectable attribution method before distribution starts:
+unique link / code / referral id / other: ______________
+Only attributed transactions count.
 
-4. Pay
-Distributor earns ______% of net checkout revenue from attributed sales
-for ______ days from first live post (default 40% / 90 days).
-Paid on the same schedule Owner gets paid by the platform, or twice monthly, whichever comes first.
+4. CUSTOMER PAYMENT PATH
+Customer pays Product Owner/platform through the Owner-controlled checkout.
+Cashrail does not receive customer settlement proceeds for Owner's product and forward them to Owner.
 
-5. Rules
-No fake reviews. No fake screenshots. No impersonation.
-No ads on Distributor's money. If Owner funds ads, write a separate deal.
+5. PAY
+Cashrail earns ______% of net cleared checkout revenue from attributed sales for ______ days from first live distribution.
+Owner pays Cashrail on: ______________
+Refunds/chargebacks reduce the attributable base to the extent they reverse attributed revenue.
 
-6. Kill clause
-If attributed revenue is $0 after 3 days of live unique links, either side can rip it up with no trailing pay except sales already in process.
+6. PROOF
+Owner provides enough attribution/settlement evidence to substantiate the commission calculation without exposing unrelated sensitive financial data.
 
-7. Stop
-Owner can cut access. Trailing 14 days of attributed sales still pay.
+7. RULES
+No fake reviews, screenshots, testimonials, or impersonation.
+No ads on Cashrail's money unless separately approved under a written spend cap.
+No prohibited or regulated product/fee-share arrangement that has not been separately reviewed.
+Material affiliate/revenue relationships are disclosed where required.
+
+8. STOP / REPAIR
+Either side may stop new distribution in writing.
+Performance diagnosis should use actual impressions/deliveries, clicks/replies, qualified interest, purchases, refunds, and net contribution rather than an automatic clock-only kill.
+Trailing attributed sales after stop follow this written window only: ______ days.
 
 Owner signature / date: ____________________
-Distributor signature / date: ____________________
+Cashrail signature / date: ____________________

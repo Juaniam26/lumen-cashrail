@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "canonical_as_of": "2026-09-17",
+  "platform": "Lumen",
+  "tenant": "Cashrail",
+  "repository_role": "operating-contract",
+  "spend_policy": {
+    "mode": "zero_out_of_pocket_until_verified_profit",
+    "owner_override_required": true
+  },
+  "truth_policy": {
+    "verified_send_requires_provider_message_id": true,
+    "verified_cash_requires_transaction_evidence": true,
+    "manual_send_status_is_verified": false,
+    "manual_cash_entry_is_verified": false,
+    "unverified_source_fallback": "blocked_no_live_source"
+  },
+  "workstreams": {
+    "signal_intelligence": {
+      "status": "active",
+      "historical_lanes": ["L3"],
+      "customer_surface": "Signal Intelligence"
+    },
+    "account_mapping": {
+      "status": "active_support",
+      "historical_lanes": [],
+      "customer_surface": "Account Mapping"
+    },
+    "partner_revenue_engine": {
+      "status": "active",
+      "historical_lanes": ["L1", "L8"],
+      "customer_surface": "Opportunity Windows + Close Support",
+      "payment_route": "customer_to_partner_then_partner_commission_to_cashrail"
+    },
+    "stalled_proposal_recovery": {
+      "status": "active",
+      "historical_lanes": ["L7B"],
+      "customer_surface": "Revenue Leakage Review + B2B Recovery"
+    },
+    "owned_offer_distribution": {
+      "status": "support",
+      "historical_lanes": ["L5"],
+      "customer_surface": "Outbound Distribution"
+    },
+    "automation_install": {
+      "status": "build_demo_gate",
+      "historical_lanes": ["L9"],
+      "customer_surface": "AI Workflow Install",
+      "demo_required": true
+    },
+    "waste_share": {
+      "status": "experimental",
+      "historical_lanes": ["L2"]
+    },
+    "bounties": {
+      "status": "opportunistic",
+      "historical_lanes": ["L4"]
+    },
+    "third_party_invoice_collection": {
+      "status": "paused_compliance",
+      "historical_lanes": ["L7A"]
+    },
+    "real_estate": {
+      "status": "disabled",
+      "historical_lanes": ["L6"],
+      "reason": "outside_cashrail_runtime_and_unlicensed_boundary"
+    }
+  },
+  "provider_readiness": {
+    "apollo": {
+      "research": "available",
+      "outbound": "not_ready_no_linked_sending_mailbox"
+    },
+    "payment_reconciliation": "not_implemented_in_this_repository"
+  },
+  "funnel": [
+    "opportunity_discovered",
+    "evidence_verified",
+    "message_drafted",
+    "message_approved",
+    "message_provider_accepted",
+    "message_delivered",
+    "message_replied",
+    "lead_qualified",
+    "agreement_signed",
+    "payment_pending",
+    "payment_verified"
+  ]
+}

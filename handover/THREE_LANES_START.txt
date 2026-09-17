@@ -1,35 +1,21 @@
-THREE LANES — START HERE
-Not real estate. Bot drafts. You sign.
+DEPRECATED — HISTORICAL START FILE — DO NOT USE AS CURRENT RUNTIME
 
-OPEN THESE CHATS
-07_CASH_RECOVERY.txt
-08_SPLIT_CLOSER.txt
-09_INSTALL_SELLER.txt
-Plus the old 00_REVENUE_DESK.txt if you want one coordinator. Tell the desk the only active lanes are 7, 8, 9.
+The former L7 / L8 / L9 "Three Lanes" startup model is retained only so older chats and handoffs can be interpreted.
 
-DEFAULT LOAD
-Hours 0–18: Lane 8 + Lane 7 lists
-Lane 9: ONLY after you paste a one-sentence demo into that chat
-If Lane 9 has no demo, it stays parked. Do not pitch vapor.
+CURRENT AUTHORITY
+1. config/revenue-runtime.json
+2. handover/00_START_HERE.txt
+3. docs/EVENT_LEDGER_CONTRACT.md
+4. docs/COMPLIANCE_BOUNDARIES.md
 
-YOU APPROVE
-First-touch templates
-Any send
-Any agreement
-Any mailbox the recovery lane wants to use
+CURRENT MAPPING
+- Historical L8 is part of the active Partner Revenue Engine together with L1.
+- Historical L7B stalled-proposal recovery is active.
+- Historical L7A third-party invoice collection is paused for compliance design.
+- Historical L9 remains demo-gated: no working demo = no pitch.
+- L6 / real estate is disabled.
 
-AGREEMENTS
-agreements/CASH_RECOVERY_AGREEMENT.txt
-agreements/SPLIT_CLOSE_AGREEMENT.txt   (already in the kit)
-agreements/INSTALL_AGREEMENT.txt
+TRUTH RULE
+Drafts are not sends. Manual status is not proof. Cash is not verified until external transaction/settlement evidence exists.
 
-MONEY RULES
-$0 ads
-No fake overnight posts
-No consumer debt
-No "the bot is a realtor"
-Lane 9 does not exist without a demo
-
-SANE TARGET
-Signed paper this week. First cash when a recovered invoice or a close lands.
-Stretch remains a stretch. Do not write it on a pitch email.
+Do not paste the old startup instructions into a new worker. Start from handover/00_START_HERE.txt and the canonical runtime file instead.

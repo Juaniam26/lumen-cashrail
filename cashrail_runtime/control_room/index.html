@@ -17,6 +17,7 @@
         </div>
         <div class="top-actions">
           <button class="button button--quiet" id="refresh" type="button">Refresh status</button>
+          <button class="button button--quiet" id="rerun-readiness" type="button">Run readiness check again</button>
           <button class="button button--signal" id="walkthrough" type="button">Show me how it works</button>
         </div>
       </header>
@@ -79,7 +80,7 @@
       <section class="panel blockers" aria-labelledby="blockers-title">
         <div class="section-heading">
           <div><p class="eyebrow">Why Bot 1 stopped</p><h2 id="blockers-title">The 12 original blockers, grouped simply.</h2></div>
-          <span class="status status--attention">0 of 6 gates passed</span>
+          <span class="status status--attention" id="gate-count">0 of 6 gates passed</span>
         </div>
         <div class="blocker-grid">
           <article><span>1</span><h3>Signing control fixed</h3><p>The Controller can sign, but only after every gate truly passes.</p></article>

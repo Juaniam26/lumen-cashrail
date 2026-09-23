@@ -1,10 +1,13 @@
 const refreshButton = document.querySelector("#refresh");
+const rerunReadinessButton = document.querySelector("#rerun-readiness");
 const walkthroughButton = document.querySelector("#walkthrough");
 const walkthroughPanel = document.querySelector("#walkthrough-panel");
 const runtimeState = document.querySelector("#runtime-state");
 const sourceLabel = document.querySelector("#source-label");
 const updatedAt = document.querySelector("#updated-at");
 const verifiedProfit = document.querySelector("#verified-profit");
+const readinessStatus = document.querySelector("#readiness-status");
+const gateCount = document.querySelector("#gate-count");
 
 function money(cents, currency) {
   return new Intl.NumberFormat("en-US", {
@@ -12,6 +15,34 @@ function money(cents, currency) {
     currency,
     maximumFractionDigits: 0,
   }).format(cents / 100);
+}
+
+async function rerunReadiness() {
+  rerunReadinessButton.disabled = true;
+  rerunReadinessButton.setAttribute("aria-busy", "true");
+  runtimeState.textContent = "Running a safe readiness check…";
+  try {
+    const response = await fetch("/v1/control-room/readiness-check", {
+      method: "POST",
+      headers: { Accept: "application/json" },
+      cache: "no-store",
+    });
+    if (!response.ok) throw new Error("Readiness check unavailable");
+    const check = await response.json();
+    readinessStatus.textContent = check.result.replace("_", " ");
+    gateCount.textContent = `${check.passed} of ${check.total} gates passed`;
+    sourceLabel.textContent = "Fresh readiness check";
+    updatedAt.textContent = `Checked ${new Intl.DateTimeFormat("en-US", {
+      hour: "numeric",
+      minute: "2-digit",
+    }).format(new Date(check.checked_at))}`;
+    runtimeState.textContent = "Check complete · no bot started · no external action taken";
+  } catch {
+    runtimeState.textContent = "Readiness check failed · previous report preserved";
+  } finally {
+    rerunReadinessButton.disabled = false;
+    rerunReadinessButton.removeAttribute("aria-busy");
+  }
 }
 
 async function refreshStatus() {
@@ -55,4 +86,5 @@ walkthroughButton.addEventListener("click", () => {
 });
 
 refreshButton.addEventListener("click", refreshStatus);
+rerunReadinessButton.addEventListener("click", rerunReadiness);
 refreshStatus();

@@ -87,7 +87,7 @@ def create_app(settings: Settings) -> FastAPI:
     session_factory, engine = make_session_factory(
         settings.database_url, initialize_schema=settings.auto_create_schema
     )
-    app = FastAPI(title="Cashrail Grok Six-Bot Controller", version="1.2.0")
+    app = FastAPI(title="Cashrail Grok Six-Bot Controller", version="1.3.0")
     app.state.settings = settings
     app.state.session_factory = session_factory
     app.state.engine = engine
@@ -144,6 +144,48 @@ def create_app(settings: Settings) -> FastAPI:
             },
             "external_execution_enabled": settings.enable_live_execution,
             "updated_at": datetime.now(UTC).isoformat(),
+        }
+
+    @app.post("/v1/control-room/readiness-check")
+    def control_room_readiness_check(db: Session = Depends(db_session)) -> dict[str, object]:
+        """Recompute readiness without activating a bot or performing external actions."""
+        now = datetime.now(UTC)
+        latest_decision = db.scalars(
+            select(ControllerDecision).order_by(ControllerDecision.created_at.desc()).limit(1)
+        ).first()
+        latest_manifest = db.scalars(
+            select(ReadinessManifestRecord)
+            .order_by(ReadinessManifestRecord.created_at.desc())
+            .limit(1)
+        ).first()
+        has_live_stripe_proof = (
+            db.scalars(
+                select(ProviderEvent)
+                .where(ProviderEvent.provider == "stripe")
+                .order_by(ProviderEvent.received_at.desc())
+                .limit(1)
+            ).first()
+            is not None
+        )
+        manifest_valid_until = latest_manifest.valid_until if latest_manifest else None
+        if manifest_valid_until and manifest_valid_until.tzinfo is None:
+            manifest_valid_until = manifest_valid_until.replace(tzinfo=UTC)
+        gates = {
+            "A": bool(settings.delivery_owner),
+            "B": bool(settings.security_review_owner and settings.security_review_capacity),
+            "C": has_live_stripe_proof,
+            "D": bool(latest_decision and latest_decision.disposition == "APPROVED"),
+            "E": settings.enable_live_execution,
+            "F": bool(manifest_valid_until and manifest_valid_until > now),
+        }
+        return {
+            "result": "READY" if all(gates.values()) else "NOT_READY",
+            "gates": gates,
+            "passed": sum(gates.values()),
+            "total": len(gates),
+            "checked_at": now.isoformat(),
+            "clock_started": False,
+            "external_actions_performed": False,
         }
 
     @app.post("/v1/attempts", dependencies=[Depends(require_controller)])

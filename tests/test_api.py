@@ -51,6 +51,21 @@ def test_control_room_is_served_and_snapshot_leaks_no_secrets(tmp_path) -> None:
     assert "secret" not in snapshot.text.lower()
 
 
+def test_control_room_can_rerun_a_safe_readiness_check(tmp_path) -> None:
+    api = client(tmp_path)
+    page = api.get("/control-room/")
+    check = api.post("/v1/control-room/readiness-check")
+
+    assert page.status_code == 200
+    assert 'id="rerun-readiness"' in page.text
+    assert "Run readiness check again" in page.text
+    assert check.status_code == 200
+    assert check.json()["clock_started"] is False
+    assert check.json()["external_actions_performed"] is False
+    assert check.json()["result"] == "NOT_READY"
+    assert set(check.json()["gates"]) == set("ABCDEF")
+
+
 def test_controller_endpoints_require_authentication(tmp_path) -> None:
     response = client(tmp_path).post("/v1/attempts", json={"bot_id": "bot_1"})
     assert response.status_code == 401

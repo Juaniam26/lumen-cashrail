@@ -11,7 +11,9 @@ See `AUTONOMOUS-OPERATING-POLICY.md`.
 
 The read-only Control Room is available at `/control-room/`. It explains the six-bot sequence,
 current readiness state, blockers, Controller/Jev roles, and provider-confirmed money in plain
-language. It exposes no Controller mutation controls or credentials.
+language. It exposes no Controller mutation controls or credentials. “Refresh status” updates the
+display; “Run readiness check again” safely recomputes the six gates without activating a bot,
+starting its clock, or performing an external action.
 
 The `production-gates` GitHub workflow enforces tests, at least 90% coverage, lint, strict type checking, static security analysis, dependency auditing, specification integrity, and a clean distributable build.
 

@@ -18,6 +18,7 @@ The control room is a read-only explanation and status surface. It never starts 
 - Initial load reserves the final layout and shows “Checking Cashrail…” in the status region.
 - Successful refresh labels the view “Live read-only snapshot” and shows the update time.
 - Failed refresh keeps the explanatory Bot 1 readiness report visible, labels it “Last known report,” and offers a real Retry button.
+- “Run readiness check again” recomputes the six gates without activating a bot, starting its clock, or performing an external action. It reports the fresh gate count and preserves the prior report if the check fails.
 - “Show me how it works” starts a clearly labeled sample walkthrough. It never changes runtime state.
 - The six bot stations remain in sequence. Only one may be described as active.
 - Money remains $0 until the snapshot reports provider-confirmed cleared cash.

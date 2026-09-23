@@ -14,7 +14,20 @@ from pydantic import BaseModel, Field
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
-from .db import Attempt, IdempotencyRecord, ProviderEvent, make_session_factory
+from .controller import (
+    ActionContext,
+    JevInputs,
+    StandingPolicy,
+    evaluate_action,
+    evaluate_jev,
+)
+from .db import (
+    Attempt,
+    ControllerDecision,
+    IdempotencyRecord,
+    ProviderEvent,
+    make_session_factory,
+)
 from .settings import Settings
 
 
@@ -24,6 +37,29 @@ class AttemptCreate(BaseModel):
 
 class ReadinessManifest(BaseModel):
     gates: dict[str, bool]
+
+
+class JevInputBody(BaseModel):
+    opportunity_id: str = Field(min_length=1, max_length=255)
+    collection_probability: float | None = Field(default=None, ge=0, le=1)
+    expected_verified_profit: int | None = Field(default=None, ge=0)
+    remaining_action_hours: float | None = Field(default=None, ge=0)
+    delivery_capacity: bool | None = None
+    reviewer_capacity: bool | None = None
+    approved_deposit: bool = False
+    evidence_complete: bool = False
+    policy_version: str = Field(min_length=1, max_length=80)
+    economics_version: str = Field(min_length=1, max_length=80)
+
+
+class ControllerEvaluationBody(BaseModel):
+    action: str = Field(min_length=1, max_length=80)
+    gates: dict[str, bool]
+    suppression_clear: bool
+    authority_verified: bool
+    evidence_fresh: bool
+    security_clear: bool
+    jev_inputs: JevInputBody
 
 
 def create_app(settings: Settings) -> FastAPI:
@@ -50,6 +86,16 @@ def create_app(settings: Settings) -> FastAPI:
     @app.get("/v1/health")
     def health() -> dict[str, object]:
         return {"status": "ok", "live_execution": settings.enable_live_execution}
+
+    @app.get("/v1/controller/status")
+    def controller_status() -> dict[str, object]:
+        return {
+            "controller": "cashrail-autonomous-controller",
+            "jev": "deterministic-profit-router",
+            "user_in_runtime_chain": False,
+            "out_of_policy_behavior": "STOP",
+            "external_execution_enabled": settings.enable_live_execution,
+        }
 
     @app.post("/v1/attempts", dependencies=[Depends(require_controller)])
     def create_attempt(
@@ -101,6 +147,83 @@ def create_app(settings: Settings) -> FastAPI:
         attempt.readiness_manifest = json.dumps(body.gates, sort_keys=True)
         db.commit()
         return _attempt_payload(attempt)
+
+    @app.post("/v1/controller/evaluate", dependencies=[Depends(require_controller)])
+    def controller_evaluate(
+        body: ControllerEvaluationBody,
+        idempotency_key: str = Header(min_length=8, max_length=255, alias="Idempotency-Key"),
+        db: Session = Depends(db_session),
+    ) -> object:
+        request_hash = hashlib.sha256(body.model_dump_json().encode()).hexdigest()
+        existing = db.get(IdempotencyRecord, idempotency_key)
+        if existing:
+            if existing.request_hash != request_hash:
+                raise HTTPException(status_code=409, detail="idempotency key payload mismatch")
+            saved = db.get(ControllerDecision, existing.resource_id)
+            if saved is None:
+                raise HTTPException(status_code=500, detail="controller decision record is corrupt")
+            return JSONResponse(status_code=200, content=json.loads(saved.response_json))
+
+        jev_inputs = JevInputs(**body.jev_inputs.model_dump())
+        jev = evaluate_jev(jev_inputs)
+        policy = StandingPolicy(
+            version=settings.controller_policy_version,
+            allowed_actions=settings.allowed_controller_actions,
+        )
+        disposition = evaluate_action(
+            policy,
+            ActionContext(
+                action=body.action,
+                gates=body.gates,
+                suppression_clear=body.suppression_clear,
+                authority_verified=body.authority_verified,
+                evidence_fresh=body.evidence_fresh,
+                security_clear=body.security_clear,
+                jev=jev,
+            ),
+        )
+        response = {
+            "decision_id": jev.decision_id,
+            "opportunity_id": jev.opportunity_id,
+            "action": body.action,
+            "disposition": disposition.disposition,
+            "reason_code": disposition.reason_code,
+            "escalation_target": disposition.escalation_target,
+            "jev_action": jev.selected_action,
+            "jev_reason_code": jev.reason_code,
+            "jev_input_hash": jev.input_hash,
+            "profit_per_remaining_hour": jev.profit_per_remaining_hour,
+            "policy_version": jev.policy_version,
+            "economics_version": jev.economics_version,
+            "valid_until": jev.valid_until.isoformat(),
+        }
+        db.add(
+            ControllerDecision(
+                id=jev.decision_id,
+                opportunity_id=jev.opportunity_id,
+                action=body.action,
+                disposition=disposition.disposition,
+                reason_code=disposition.reason_code,
+                jev_action=jev.selected_action,
+                jev_input_hash=jev.input_hash,
+                policy_version=jev.policy_version,
+                economics_version=jev.economics_version,
+                created_at=jev.created_at,
+                valid_until=jev.valid_until,
+                response_json=json.dumps(response, sort_keys=True),
+            )
+        )
+        db.add(
+            IdempotencyRecord(
+                key=idempotency_key,
+                scope="controller:evaluate",
+                resource_id=jev.decision_id,
+                request_hash=request_hash,
+                created_at=jev.created_at,
+            )
+        )
+        db.commit()
+        return JSONResponse(status_code=201, content=response)
 
     @app.post("/v1/webhooks/stripe", status_code=202)
     async def stripe_webhook(

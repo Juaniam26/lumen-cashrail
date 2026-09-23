@@ -43,6 +43,22 @@ class ProviderEvent(Base):
     processed: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
 
 
+class ControllerDecision(Base):
+    __tablename__ = "controller_decisions"
+    id: Mapped[str] = mapped_column(String(64), primary_key=True)
+    opportunity_id: Mapped[str] = mapped_column(String(255), nullable=False, index=True)
+    action: Mapped[str] = mapped_column(String(80), nullable=False)
+    disposition: Mapped[str] = mapped_column(String(24), nullable=False)
+    reason_code: Mapped[str] = mapped_column(String(120), nullable=False)
+    jev_action: Mapped[str] = mapped_column(String(24), nullable=False)
+    jev_input_hash: Mapped[str] = mapped_column(String(64), nullable=False)
+    policy_version: Mapped[str] = mapped_column(String(80), nullable=False)
+    economics_version: Mapped[str] = mapped_column(String(80), nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    valid_until: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    response_json: Mapped[str] = mapped_column(Text, nullable=False)
+
+
 def make_session_factory(
     database_url: str, *, initialize_schema: bool
 ) -> tuple[sessionmaker[Session], Engine]:

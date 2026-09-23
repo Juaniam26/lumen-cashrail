@@ -478,19 +478,6 @@
       "version": "5.0"
     },
     {
-      "bom-ref": "cashrail-six-bot-runtime==1.0.0",
-      "externalReferences": [
-        {
-          "comment": "PackageSource: Local",
-          "type": "distribution",
-          "url": "file:///Users/jzapata/Documents/Codex/2026-09-22/referenced-chatgpt-conversation-this-is-an-2/work/cashrail-takeover"
-        }
-      ],
-      "name": "cashrail-six-bot-runtime",
-      "type": "library",
-      "version": "1.0.0"
-    },
-    {
       "bom-ref": "certifi==2026.7.22",
       "description": "Python package for providing Mozilla's CA Bundle.",
       "externalReferences": [
@@ -2602,25 +2589,6 @@
       "ref": "boolean.py==5.0"
     },
     {
-      "dependsOn": [
-        "SQLAlchemy==2.0.54",
-        "alembic==1.20.0",
-        "bandit==1.9.4",
-        "fastapi==0.141.1",
-        "httpx==0.28.1",
-        "mypy==1.20.2",
-        "pip_audit==2.10.1",
-        "psycopg==3.3.6",
-        "pydantic-settings==2.15.0",
-        "pytest-cov==7.1.0",
-        "pytest==9.1.1",
-        "ruff==0.16.8",
-        "stripe==15.6.1",
-        "uvicorn==0.53.0"
-      ],
-      "ref": "cashrail-six-bot-runtime==1.0.0"
-    },
-    {
       "ref": "certifi==2026.7.22"
     },
     {
@@ -2901,6 +2869,25 @@
       "ref": "rich==15.0.0"
     },
     {
+      "dependsOn": [
+        "SQLAlchemy==2.0.54",
+        "alembic==1.20.0",
+        "bandit==1.9.4",
+        "fastapi==0.141.1",
+        "httpx==0.28.1",
+        "mypy==1.20.2",
+        "pip_audit==2.10.1",
+        "psycopg==3.3.6",
+        "pydantic-settings==2.15.0",
+        "pytest-cov==7.1.0",
+        "pytest==9.1.1",
+        "ruff==0.16.8",
+        "stripe==15.6.1",
+        "uvicorn==0.53.0"
+      ],
+      "ref": "root-component"
+    },
+    {
       "ref": "ruff==0.16.8"
     },
     {
@@ -2975,7 +2962,18 @@
     }
   ],
   "metadata": {
-    "timestamp": "2026-09-23T05:03:25.264599+00:00",
+    "component": {
+      "bom-ref": "root-component",
+      "name": "cashrail-six-bot-runtime",
+      "type": "application",
+      "version": "1.1.0"
+    },
+    "properties": [
+      {
+        "name": "cdx:reproducible",
+        "value": "true"
+      }
+    ],
     "tools": {
       "components": [
         {
@@ -3079,7 +3077,6 @@
       ]
     }
   },
-  "serialNumber": "urn:uuid:2dbdba8a-08b7-40a1-8eca-1c7d21f22800",
   "version": 1,
   "$schema": "http://cyclonedx.org/schema/bom-1.6.schema.json",
   "bomFormat": "CycloneDX",

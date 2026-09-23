@@ -7,7 +7,7 @@ packages = ["cashrail_runtime"]
 
 [project]
 name = "cashrail-six-bot-runtime"
-version = "1.0.0"
+version = "1.1.0"
 requires-python = ">=3.12"
 dependencies = [
   "alembic>=1.18,<2",

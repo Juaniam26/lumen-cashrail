@@ -25,6 +25,18 @@ def test_health_is_public_but_does_not_leak_secrets(tmp_path) -> None:
     assert "token" not in response.text.lower()
 
 
+def test_controller_status_names_cashrail_and_excludes_user_from_runtime(tmp_path) -> None:
+    response = client(tmp_path).get("/v1/controller/status")
+    assert response.status_code == 200
+    assert response.json() == {
+        "controller": "cashrail-autonomous-controller",
+        "jev": "deterministic-profit-router",
+        "user_in_runtime_chain": False,
+        "out_of_policy_behavior": "STOP",
+        "external_execution_enabled": False,
+    }
+
+
 def test_controller_endpoints_require_authentication(tmp_path) -> None:
     response = client(tmp_path).post("/v1/attempts", json={"bot_id": "bot_1"})
     assert response.status_code == 401
@@ -118,3 +130,79 @@ def test_checkout_completed_is_not_credited_as_cleared_cash(tmp_path, monkeypatc
     )
     assert response.status_code == 202
     assert response.json()["credited_cleared_cash"] == 0
+
+
+def test_autonomous_controller_evaluates_and_persists_decision(tmp_path) -> None:
+    api = client(tmp_path)
+    payload = {
+        "action": "DRAFT_PROPOSAL",
+        "gates": {key: True for key in "ABCDEF"},
+        "suppression_clear": True,
+        "authority_verified": True,
+        "evidence_fresh": True,
+        "security_clear": True,
+        "jev_inputs": {
+            "opportunity_id": "opp-1",
+            "collection_probability": 0.9,
+            "expected_verified_profit": 1_500_000,
+            "remaining_action_hours": 10,
+            "delivery_capacity": True,
+            "reviewer_capacity": True,
+            "approved_deposit": False,
+            "evidence_complete": True,
+            "policy_version": "cashrail-v1",
+            "economics_version": "economics-v1",
+        },
+    }
+
+    response = api.post(
+        "/v1/controller/evaluate",
+        headers=auth() | {"Idempotency-Key": "controller-decision-opp-1"},
+        json=payload,
+    )
+    replay = api.post(
+        "/v1/controller/evaluate",
+        headers=auth() | {"Idempotency-Key": "controller-decision-opp-1"},
+        json=payload,
+    )
+
+    assert response.status_code == 201
+    assert response.json()["disposition"] == "APPROVED"
+    assert response.json()["jev_action"] == "PURSUE"
+    assert response.json()["escalation_target"] is None
+    assert replay.status_code == 200
+    assert replay.json()["decision_id"] == response.json()["decision_id"]
+
+
+def test_autonomous_controller_stops_out_of_policy_without_user_escalation(tmp_path) -> None:
+    api = client(tmp_path)
+    payload = {
+        "action": "SEND_OUTREACH",
+        "gates": {key: True for key in "ABCDEF"},
+        "suppression_clear": True,
+        "authority_verified": True,
+        "evidence_fresh": True,
+        "security_clear": True,
+        "jev_inputs": {
+            "opportunity_id": "opp-2",
+            "collection_probability": 0.9,
+            "expected_verified_profit": 1_500_000,
+            "remaining_action_hours": 10,
+            "delivery_capacity": True,
+            "reviewer_capacity": True,
+            "approved_deposit": False,
+            "evidence_complete": True,
+            "policy_version": "cashrail-v1",
+            "economics_version": "economics-v1",
+        },
+    }
+
+    response = api.post(
+        "/v1/controller/evaluate",
+        headers=auth() | {"Idempotency-Key": "controller-decision-opp-2"},
+        json=payload,
+    )
+
+    assert response.status_code == 201
+    assert response.json()["disposition"] == "STOPPED"
+    assert response.json()["escalation_target"] is None

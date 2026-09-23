@@ -1,0 +1,47 @@
+[build-system]
+requires = ["setuptools>=80"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["cashrail_runtime"]
+
+[project]
+name = "cashrail-six-bot-runtime"
+version = "1.0.0"
+requires-python = ">=3.12"
+dependencies = [
+  "alembic>=1.18,<2",
+  "fastapi>=0.141,<1",
+  "pydantic-settings>=2.13,<3",
+  "psycopg[binary]>=3.3,<4",
+  "sqlalchemy>=2.0,<3",
+  "stripe>=15.4,<16",
+  "uvicorn[standard]>=0.41,<1",
+]
+
+[project.optional-dependencies]
+dev = ["bandit>=1.9,<2", "httpx>=0.28,<1", "mypy>=1.19,<2", "pip-audit>=2.10,<3", "pytest>=9.1,<10", "pytest-cov>=7,<8", "ruff>=0.15,<1"]
+
+[tool.pytest.ini_options]
+addopts = "-ra --strict-markers"
+filterwarnings = [
+  "ignore:Using `httpx` with `starlette.testclient` is deprecated:starlette.exceptions.StarletteDeprecationWarning",
+  "ignore:The anyio.abc.BlockingPortal alias is deprecated:DeprecationWarning",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+extend-exclude = ["tournament-spec"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "S", "B", "UP"]
+
+[tool.ruff.lint.per-file-ignores]
+"cashrail_runtime/api.py" = ["B008"]
+"tests/*" = ["S101", "S106", "B018"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+plugins = ["pydantic.mypy"]

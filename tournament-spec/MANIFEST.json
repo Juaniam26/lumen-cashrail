@@ -1,0 +1,251 @@
+{
+  "bot": null,
+  "file_count_excluding_manifest_and_checksum": 48,
+  "files": [
+    {
+      "path": "AUDIT-DISPOSITIONS.md",
+      "sha256": "c938d42ce75ec74b4b81b7f4fb2ea11427b10e69a7136bb3ecc04bb92c3ea4db",
+      "size_bytes": 2817
+    },
+    {
+      "path": "IMPLEMENTATION-SEQUENCE.md",
+      "sha256": "d0765f93140351c7211a324c049f30f0033b02c65d839e6a9c19a509322ea706",
+      "size_bytes": 1890
+    },
+    {
+      "path": "README.md",
+      "sha256": "a29e0c3d65864d9965ee86a339ec0eefb47cf621c50b47b344747e3c314e272c",
+      "size_bytes": 1275
+    },
+    {
+      "path": "PRODUCTION-READINESS-AUDIT.md",
+      "sha256": "4ce14fe84578e52469b92554587d7bba04cf80ea6c81ad7046b631ab9122031d",
+      "size_bytes": 5530
+    },
+    {
+      "path": "IMPLEMENTATION-BLOCKERS.md",
+      "sha256": "e46ef23772e8e3848c88c3e1168091eb84e06bf27859a8e7cb4d7090677caf39",
+      "size_bytes": 1600
+    },
+    {
+      "path": "RECONSTRUCTION-NOTES.md",
+      "sha256": "bbf7bf4784808a7d0c01a472e6fdfcfb49887a787ee6f44e5d23a72ddadd3f44",
+      "size_bytes": 1325
+    },
+    {
+      "path": "bots/bot-1-security-review-deal-unblocker/MISSION.md",
+      "sha256": "2e7c679afa14249e13a0c64cb56324afc5fb8d8231d1378de7898b6a782741c1",
+      "size_bytes": 7299
+    },
+    {
+      "path": "bots/bot-1-security-review-deal-unblocker/shared/execution-kernel-v1.8.md",
+      "sha256": "3504917f4474361017ff54890297e8993e9bbc3b33dc7096b6a633fa86275614",
+      "size_bytes": 4102
+    },
+    {
+      "path": "bots/bot-1-security-review-deal-unblocker/shared/gate-control-kit-v1.8.md",
+      "sha256": "589b4670c735d27db21645f0c0f2f73a948a5e82946cf6460f21c746e1225942",
+      "size_bytes": 3132
+    },
+    {
+      "path": "bots/bot-1-security-review-deal-unblocker/shared/jev-profit-routing-architecture-v1.8.md",
+      "sha256": "9c397f235392d602ea23aee50706280472582936405ee710dad10ada97bfe26b",
+      "size_bytes": 4253
+    },
+    {
+      "path": "bots/bot-1-security-review-deal-unblocker/shared/master-tournament-mission-v1.8.md",
+      "sha256": "93eab23e9e91ba169e25154313dd997dc767fc198510d4423fc7345a8172eecf",
+      "size_bytes": 5758
+    },
+    {
+      "path": "bots/bot-1-security-review-deal-unblocker/shared/runtime-contract-v1.8.md",
+      "sha256": "119678edc50ec2e41a7a0fa1359066c45534f2a86e9171642d160a8b9086b972",
+      "size_bytes": 3029
+    },
+    {
+      "path": "bots/bot-2-overdue-b2b-invoice-recovery/MISSION.md",
+      "sha256": "f44115508ae2420b87a3ae44a691820de13cb074453468098a23525ff8cae791",
+      "size_bytes": 7047
+    },
+    {
+      "path": "bots/bot-2-overdue-b2b-invoice-recovery/shared/execution-kernel-v1.8.md",
+      "sha256": "3504917f4474361017ff54890297e8993e9bbc3b33dc7096b6a633fa86275614",
+      "size_bytes": 4102
+    },
+    {
+      "path": "bots/bot-2-overdue-b2b-invoice-recovery/shared/gate-control-kit-v1.8.md",
+      "sha256": "589b4670c735d27db21645f0c0f2f73a948a5e82946cf6460f21c746e1225942",
+      "size_bytes": 3132
+    },
+    {
+      "path": "bots/bot-2-overdue-b2b-invoice-recovery/shared/jev-profit-routing-architecture-v1.8.md",
+      "sha256": "9c397f235392d602ea23aee50706280472582936405ee710dad10ada97bfe26b",
+      "size_bytes": 4253
+    },
+    {
+      "path": "bots/bot-2-overdue-b2b-invoice-recovery/shared/master-tournament-mission-v1.8.md",
+      "sha256": "93eab23e9e91ba169e25154313dd997dc767fc198510d4423fc7345a8172eecf",
+      "size_bytes": 5758
+    },
+    {
+      "path": "bots/bot-2-overdue-b2b-invoice-recovery/shared/runtime-contract-v1.8.md",
+      "sha256": "119678edc50ec2e41a7a0fa1359066c45534f2a86e9171642d160a8b9086b972",
+      "size_bytes": 3029
+    },
+    {
+      "path": "bots/bot-3-accessibility-remediation-evidence/MISSION.md",
+      "sha256": "b759fb08b686b4a12f4744ee3caeb4d79c083fe3eb036561a1227797e8af8d9c",
+      "size_bytes": 6986
+    },
+    {
+      "path": "bots/bot-3-accessibility-remediation-evidence/shared/execution-kernel-v1.8.md",
+      "sha256": "3504917f4474361017ff54890297e8993e9bbc3b33dc7096b6a633fa86275614",
+      "size_bytes": 4102
+    },
+    {
+      "path": "bots/bot-3-accessibility-remediation-evidence/shared/gate-control-kit-v1.8.md",
+      "sha256": "589b4670c735d27db21645f0c0f2f73a948a5e82946cf6460f21c746e1225942",
+      "size_bytes": 3132
+    },
+    {
+      "path": "bots/bot-3-accessibility-remediation-evidence/shared/jev-profit-routing-architecture-v1.8.md",
+      "sha256": "9c397f235392d602ea23aee50706280472582936405ee710dad10ada97bfe26b",
+      "size_bytes": 4253
+    },
+    {
+      "path": "bots/bot-3-accessibility-remediation-evidence/shared/master-tournament-mission-v1.8.md",
+      "sha256": "93eab23e9e91ba169e25154313dd997dc767fc198510d4423fc7345a8172eecf",
+      "size_bytes": 5758
+    },
+    {
+      "path": "bots/bot-3-accessibility-remediation-evidence/shared/runtime-contract-v1.8.md",
+      "sha256": "119678edc50ec2e41a7a0fa1359066c45534f2a86e9171642d160a8b9086b972",
+      "size_bytes": 3029
+    },
+    {
+      "path": "bots/bot-4-missed-call-revenue-capture/MISSION.md",
+      "sha256": "c816a32356c74975b39c39a7ca5240abdf0daef4b42557b3f4a04d53578e08a4",
+      "size_bytes": 7020
+    },
+    {
+      "path": "bots/bot-4-missed-call-revenue-capture/shared/execution-kernel-v1.8.md",
+      "sha256": "3504917f4474361017ff54890297e8993e9bbc3b33dc7096b6a633fa86275614",
+      "size_bytes": 4102
+    },
+    {
+      "path": "bots/bot-4-missed-call-revenue-capture/shared/gate-control-kit-v1.8.md",
+      "sha256": "589b4670c735d27db21645f0c0f2f73a948a5e82946cf6460f21c746e1225942",
+      "size_bytes": 3132
+    },
+    {
+      "path": "bots/bot-4-missed-call-revenue-capture/shared/jev-profit-routing-architecture-v1.8.md",
+      "sha256": "9c397f235392d602ea23aee50706280472582936405ee710dad10ada97bfe26b",
+      "size_bytes": 4253
+    },
+    {
+      "path": "bots/bot-4-missed-call-revenue-capture/shared/master-tournament-mission-v1.8.md",
+      "sha256": "93eab23e9e91ba169e25154313dd997dc767fc198510d4423fc7345a8172eecf",
+      "size_bytes": 5758
+    },
+    {
+      "path": "bots/bot-4-missed-call-revenue-capture/shared/runtime-contract-v1.8.md",
+      "sha256": "119678edc50ec2e41a7a0fa1359066c45534f2a86e9171642d160a8b9086b972",
+      "size_bytes": 3029
+    },
+    {
+      "path": "bots/bot-5-cloud-waste-savings/MISSION.md",
+      "sha256": "af9e330fd04f38e509a79b0dcad79995f10fe9ff8ac802db84fa9c290f8dda87",
+      "size_bytes": 6985
+    },
+    {
+      "path": "bots/bot-5-cloud-waste-savings/shared/execution-kernel-v1.8.md",
+      "sha256": "3504917f4474361017ff54890297e8993e9bbc3b33dc7096b6a633fa86275614",
+      "size_bytes": 4102
+    },
+    {
+      "path": "bots/bot-5-cloud-waste-savings/shared/gate-control-kit-v1.8.md",
+      "sha256": "589b4670c735d27db21645f0c0f2f73a948a5e82946cf6460f21c746e1225942",
+      "size_bytes": 3132
+    },
+    {
+      "path": "bots/bot-5-cloud-waste-savings/shared/jev-profit-routing-architecture-v1.8.md",
+      "sha256": "9c397f235392d602ea23aee50706280472582936405ee710dad10ada97bfe26b",
+      "size_bytes": 4253
+    },
+    {
+      "path": "bots/bot-5-cloud-waste-savings/shared/master-tournament-mission-v1.8.md",
+      "sha256": "93eab23e9e91ba169e25154313dd997dc767fc198510d4423fc7345a8172eecf",
+      "size_bytes": 5758
+    },
+    {
+      "path": "bots/bot-5-cloud-waste-savings/shared/runtime-contract-v1.8.md",
+      "sha256": "119678edc50ec2e41a7a0fa1359066c45534f2a86e9171642d160a8b9086b972",
+      "size_bytes": 3029
+    },
+    {
+      "path": "bots/bot-6-rapid-rfp-response/MISSION.md",
+      "sha256": "d5123599eed5acadfaa423131ab26263aa689e430aee66c22a2b5abd362d0f0b",
+      "size_bytes": 7125
+    },
+    {
+      "path": "bots/bot-6-rapid-rfp-response/shared/execution-kernel-v1.8.md",
+      "sha256": "3504917f4474361017ff54890297e8993e9bbc3b33dc7096b6a633fa86275614",
+      "size_bytes": 4102
+    },
+    {
+      "path": "bots/bot-6-rapid-rfp-response/shared/gate-control-kit-v1.8.md",
+      "sha256": "589b4670c735d27db21645f0c0f2f73a948a5e82946cf6460f21c746e1225942",
+      "size_bytes": 3132
+    },
+    {
+      "path": "bots/bot-6-rapid-rfp-response/shared/jev-profit-routing-architecture-v1.8.md",
+      "sha256": "9c397f235392d602ea23aee50706280472582936405ee710dad10ada97bfe26b",
+      "size_bytes": 4253
+    },
+    {
+      "path": "bots/bot-6-rapid-rfp-response/shared/master-tournament-mission-v1.8.md",
+      "sha256": "93eab23e9e91ba169e25154313dd997dc767fc198510d4423fc7345a8172eecf",
+      "size_bytes": 5758
+    },
+    {
+      "path": "bots/bot-6-rapid-rfp-response/shared/runtime-contract-v1.8.md",
+      "sha256": "119678edc50ec2e41a7a0fa1359066c45534f2a86e9171642d160a8b9086b972",
+      "size_bytes": 3029
+    },
+    {
+      "path": "shared/execution-kernel-v1.8.md",
+      "sha256": "3504917f4474361017ff54890297e8993e9bbc3b33dc7096b6a633fa86275614",
+      "size_bytes": 4102
+    },
+    {
+      "path": "shared/gate-control-kit-v1.8.md",
+      "sha256": "589b4670c735d27db21645f0c0f2f73a948a5e82946cf6460f21c746e1225942",
+      "size_bytes": 3132
+    },
+    {
+      "path": "shared/jev-profit-routing-architecture-v1.8.md",
+      "sha256": "9c397f235392d602ea23aee50706280472582936405ee710dad10ada97bfe26b",
+      "size_bytes": 4253
+    },
+    {
+      "path": "shared/master-tournament-mission-v1.8.md",
+      "sha256": "93eab23e9e91ba169e25154313dd997dc767fc198510d4423fc7345a8172eecf",
+      "size_bytes": 5758
+    },
+    {
+      "path": "shared/runtime-contract-v1.8.md",
+      "sha256": "119678edc50ec2e41a7a0fa1359066c45534f2a86e9171642d160a8b9086b972",
+      "size_bytes": 3029
+    },
+    {
+      "path": "tools/verify_package.py",
+      "sha256": "a688ccd87ae4190f33eff22e01a76e23ac5ba266b1acac807165e3fc418a9f72",
+      "size_bytes": 2617
+    }
+  ],
+  "live_execution_authorized": false,
+  "package_version": "1.8-reconstructed",
+  "packet_type": "integrated-six-bot",
+  "schema_version": 1,
+  "source_status": "reconstructed from documented local project context; missing prior ZIP not claimed as recovered"
+}

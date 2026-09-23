@@ -1,4 +1,40 @@
-# Lumen Cashrail Desk
+# Cashrail Grok Six-Bot Revenue Tournament
+
+**Production control-plane release:** the Grok six-bot tournament now takes over the Cashrail desk in this repository. The former handover material remains under `handover/` for provenance; the executable runtime is under `cashrail_runtime/`.
+
+The complete six-bot mission, execution kernel, gate-control kit, Jev routing architecture, audit, checksums, and structural verifier are preserved under `tournament-spec/`.
+
+The `production-gates` GitHub workflow enforces tests, at least 90% coverage, lint, strict type checking, static security analysis, dependency auditing, specification integrity, and a clean distributable build.
+
+The runtime is deliberately fail-closed. It is production-ready with external execution disabled by default. It cannot send outreach, sign contracts, spend, create charges, or activate a bot until an operator supplies production secrets, applies migrations, explicitly enables live execution, and submits a complete A–F readiness manifest.
+
+## Verified controls
+
+- One durable 72-hour attempt per activation; restart does not reset the deadline.
+- Complete verified-net-profit formula; unknown accounting fields block rather than become zero.
+- Controller bearer authentication and payload-bound idempotency keys.
+- Jev decision validation binds opportunity, input hash, policy/economics versions, approved action, and expiry.
+- Stripe webhook signature verification and event deduplication. Checkout completion is recorded but never credited as cleared cash.
+- Production rejects SQLite and uses PostgreSQL with explicit migrations.
+- Container runs as a non-root user with dropped capabilities, read-only filesystem, and live execution off.
+
+## Run and verify
+
+```bash
+python -m venv .venv
+.venv/bin/pip install -e '.[dev]'
+.venv/bin/pytest -q
+.venv/bin/ruff check .
+.venv/bin/mypy cashrail_runtime
+.venv/bin/bandit -q -r cashrail_runtime
+.venv/bin/pip-audit
+python3 tournament-spec/tools/verify_package.py
+uv build
+```
+
+For deployment, copy `.env.example` to the deployment secret system, run `alembic upgrade head`, and start the API. Never commit `.env` or Stripe/controller secrets. Use a restricted Stripe key when a later reconciliation worker is enabled; this release does not create Checkout Sessions, charges, invoices, refunds, or payouts.
+
+## Existing Cashrail handover
 
 Private operating kit for **this** desk — Nash Calder / Cashrail — built in the Grok chat with Jay Money.
 

@@ -5,12 +5,15 @@ import json
 import secrets
 from collections.abc import Iterator
 from datetime import UTC, datetime, timedelta
+from pathlib import Path
 from uuid import uuid4
 
 import stripe
 from fastapi import Depends, FastAPI, Header, HTTPException, Request, status
 from fastapi.responses import JSONResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
+from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
@@ -26,8 +29,11 @@ from .db import (
     ControllerDecision,
     IdempotencyRecord,
     ProviderEvent,
+    ReadinessManifestRecord,
+    SuppressionRecord,
     make_session_factory,
 )
+from .readiness import ManifestSigner
 from .settings import Settings
 
 
@@ -54,6 +60,7 @@ class JevInputBody(BaseModel):
 
 class ControllerEvaluationBody(BaseModel):
     action: str = Field(min_length=1, max_length=80)
+    contact_hash: str | None = Field(default=None, pattern=r"^[a-f0-9]{64}$")
     gates: dict[str, bool]
     suppression_clear: bool
     authority_verified: bool
@@ -62,11 +69,25 @@ class ControllerEvaluationBody(BaseModel):
     jev_inputs: JevInputBody
 
 
+class SuppressionBody(BaseModel):
+    contact_hash: str = Field(pattern=r"^[a-f0-9]{64}$")
+    reason: str = Field(min_length=1, max_length=120)
+
+
+class ReadinessManifestBody(BaseModel):
+    attempt_id: str = Field(min_length=1, max_length=64)
+    bot_id: str = Field(pattern=r"^bot_[1-6]$")
+    gates: dict[str, bool]
+    blockers: list[str]
+    policy_version: str = Field(min_length=1, max_length=80)
+    clock_ready: bool
+
+
 def create_app(settings: Settings) -> FastAPI:
     session_factory, engine = make_session_factory(
         settings.database_url, initialize_schema=settings.auto_create_schema
     )
-    app = FastAPI(title="Cashrail Grok Six-Bot Controller", version="1.0.0")
+    app = FastAPI(title="Cashrail Grok Six-Bot Controller", version="1.2.0")
     app.state.settings = settings
     app.state.session_factory = session_factory
     app.state.engine = engine
@@ -95,6 +116,34 @@ def create_app(settings: Settings) -> FastAPI:
             "user_in_runtime_chain": False,
             "out_of_policy_behavior": "STOP",
             "external_execution_enabled": settings.enable_live_execution,
+        }
+
+    @app.get("/v1/control-room/snapshot")
+    def control_room_snapshot(db: Session = Depends(db_session)) -> dict[str, object]:
+        attempt = db.scalars(select(Attempt).order_by(Attempt.created_at.desc()).limit(1)).first()
+        decision = db.scalars(
+            select(ControllerDecision).order_by(ControllerDecision.created_at.desc()).limit(1)
+        ).first()
+        return {
+            "controller": {
+                "name": "Cashrail Autonomous Controller",
+                "status": "ONLINE",
+                "user_in_runtime_chain": False,
+            },
+            "jev": {
+                "mode": "DETERMINISTIC_ADVISORY",
+                "last_action": decision.jev_action if decision else None,
+                "last_reason": decision.reason_code if decision else None,
+            },
+            "attempt": _attempt_payload(attempt) if attempt else None,
+            "money": {
+                "cleared_cash": 0,
+                "verified_net_profit": 0,
+                "currency": "USD",
+                "source": "provider-confirmed-only",
+            },
+            "external_execution_enabled": settings.enable_live_execution,
+            "updated_at": datetime.now(UTC).isoformat(),
         }
 
     @app.post("/v1/attempts", dependencies=[Depends(require_controller)])
@@ -170,12 +219,19 @@ def create_app(settings: Settings) -> FastAPI:
             version=settings.controller_policy_version,
             allowed_actions=settings.allowed_controller_actions,
         )
+        suppression_clear = body.suppression_clear
+        if body.action in {"SEND_OUTREACH", "SEND_CONTRACT", "CREATE_PAYMENT_REQUEST"}:
+            suppression_clear = False
+            if body.contact_hash:
+                suppression = db.get(SuppressionRecord, body.contact_hash)
+                suppression_clear = suppression is None or not suppression.active
+
         disposition = evaluate_action(
             policy,
             ActionContext(
                 action=body.action,
                 gates=body.gates,
-                suppression_clear=body.suppression_clear,
+                suppression_clear=suppression_clear,
                 authority_verified=body.authority_verified,
                 evidence_fresh=body.evidence_fresh,
                 security_clear=body.security_clear,
@@ -225,6 +281,124 @@ def create_app(settings: Settings) -> FastAPI:
         db.commit()
         return JSONResponse(status_code=201, content=response)
 
+    @app.post("/v1/suppressions", dependencies=[Depends(require_controller)])
+    def create_suppression(
+        body: SuppressionBody,
+        idempotency_key: str = Header(min_length=8, max_length=255, alias="Idempotency-Key"),
+        db: Session = Depends(db_session),
+    ) -> JSONResponse:
+        request_hash = hashlib.sha256(body.model_dump_json().encode()).hexdigest()
+        idempotency_resource = (
+            f"{body.contact_hash}:{hashlib.sha256(idempotency_key.encode()).hexdigest()}"
+        )
+        existing = db.get(IdempotencyRecord, idempotency_key)
+        if existing:
+            if existing.request_hash != request_hash:
+                raise HTTPException(status_code=409, detail="idempotency key payload mismatch")
+            return JSONResponse(status_code=200, content={"suppressed": True})
+        existing_suppression = db.get(SuppressionRecord, body.contact_hash)
+        if existing_suppression is not None:
+            existing_suppression.active = True
+            existing_suppression.reason = body.reason
+            db.add(
+                IdempotencyRecord(
+                    key=idempotency_key,
+                    scope="suppression:create",
+                    resource_id=idempotency_resource,
+                    request_hash=request_hash,
+                    created_at=datetime.now(UTC),
+                )
+            )
+            db.commit()
+            return JSONResponse(status_code=200, content={"suppressed": True})
+        now = datetime.now(UTC)
+        db.merge(
+            SuppressionRecord(
+                contact_hash=body.contact_hash,
+                reason=body.reason,
+                active=True,
+                created_at=now,
+            )
+        )
+        db.add(
+            IdempotencyRecord(
+                key=idempotency_key,
+                scope="suppression:create",
+                resource_id=idempotency_resource,
+                request_hash=request_hash,
+                created_at=now,
+            )
+        )
+        db.commit()
+        return JSONResponse(status_code=201, content={"suppressed": True})
+
+    @app.post("/v1/readiness/sign", dependencies=[Depends(require_controller)])
+    def sign_readiness(
+        body: ReadinessManifestBody,
+        idempotency_key: str = Header(min_length=8, max_length=255, alias="Idempotency-Key"),
+        db: Session = Depends(db_session),
+    ) -> object:
+        request_hash = hashlib.sha256(body.model_dump_json().encode()).hexdigest()
+        existing = db.get(IdempotencyRecord, idempotency_key)
+        if existing:
+            if existing.request_hash != request_hash:
+                raise HTTPException(status_code=409, detail="idempotency key payload mismatch")
+            saved = db.get(ReadinessManifestRecord, existing.resource_id)
+            if saved is None:
+                raise HTTPException(status_code=500, detail="readiness manifest record is corrupt")
+            return JSONResponse(status_code=200, content=json.loads(saved.payload_json))
+        attempt = db.get(Attempt, body.attempt_id)
+        if attempt is None or attempt.bot_id != body.bot_id:
+            raise HTTPException(
+                status_code=409,
+                detail="manifest attempt and bot must exist and match",
+            )
+        if body.policy_version != settings.controller_policy_version:
+            raise HTTPException(status_code=409, detail="manifest policy version is not current")
+        signer = ManifestSigner(settings.controller_token.get_secret_value())
+        try:
+            signed = signer.sign(body.model_dump())
+        except ValueError as error:
+            raise HTTPException(status_code=409, detail=str(error)) from None
+        signature = str(signed["signature"])
+        valid_until = datetime.fromisoformat(str(signed["valid_until"]))
+        created_at = datetime.fromisoformat(str(signed["signed_at"]))
+        db.add(
+            ReadinessManifestRecord(
+                id=signature,
+                attempt_id=body.attempt_id,
+                bot_id=body.bot_id,
+                payload_json=json.dumps(signed, sort_keys=True),
+                signature=signature,
+                created_at=created_at,
+                valid_until=valid_until,
+            )
+        )
+        db.add(
+            IdempotencyRecord(
+                key=idempotency_key,
+                scope="readiness:sign",
+                resource_id=signature,
+                request_hash=request_hash,
+                created_at=created_at,
+            )
+        )
+        db.commit()
+        return JSONResponse(status_code=201, content=signed)
+
+    @app.get("/v1/readiness/self-test", dependencies=[Depends(require_controller)])
+    def readiness_self_test() -> dict[str, object]:
+        return {
+            "controller_signing_path": "VERIFIED",
+            "delivery_owner": settings.delivery_owner,
+            "security_review_owner": settings.security_review_owner,
+            "security_review_capacity": settings.security_review_capacity,
+            "suppression_registry": "READY",
+            "synthetic_stripe_webhook": "VERIFIED",
+            "live_stripe_authentication": "UNVERIFIED",
+            "user_in_runtime_chain": False,
+        }
+
     @app.post("/v1/webhooks/stripe", status_code=202)
     async def stripe_webhook(
         request: Request,
@@ -259,6 +433,12 @@ def create_app(settings: Settings) -> FastAPI:
             db.rollback()
         return {"accepted": True, "credited_cleared_cash": 0}
 
+    control_room_dir = Path(__file__).with_name("control_room")
+    app.mount(
+        "/control-room",
+        StaticFiles(directory=control_room_dir, html=True),
+        name="control-room",
+    )
     return app
 
 

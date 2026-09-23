@@ -9,6 +9,10 @@ in the runtime approval or escalation chain. Out-of-policy work stops automatica
 a deterministic, local, time-bounded profit router and does not require an AI-provider key.
 See `AUTONOMOUS-OPERATING-POLICY.md`.
 
+The read-only Control Room is available at `/control-room/`. It explains the six-bot sequence,
+current readiness state, blockers, Controller/Jev roles, and provider-confirmed money in plain
+language. It exposes no Controller mutation controls or credentials.
+
 The `production-gates` GitHub workflow enforces tests, at least 90% coverage, lint, strict type checking, static security analysis, dependency auditing, specification integrity, and a clean distributable build.
 
 The runtime is deliberately fail-closed. It is production-ready with external execution disabled by default. It cannot send outreach, sign contracts, spend, create charges, or activate a bot until an operator supplies production secrets, applies migrations, explicitly enables live execution, and submits a complete A–F readiness manifest.

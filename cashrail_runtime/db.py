@@ -26,7 +26,7 @@ class IdempotencyRecord(Base):
     __tablename__ = "idempotency_records"
     key: Mapped[str] = mapped_column(String(255), primary_key=True)
     scope: Mapped[str] = mapped_column(String(80), nullable=False)
-    resource_id: Mapped[str] = mapped_column(String(36), nullable=False)
+    resource_id: Mapped[str] = mapped_column(String(255), nullable=False)
     request_hash: Mapped[str] = mapped_column(String(64), nullable=False)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
     __table_args__ = (UniqueConstraint("scope", "resource_id"),)
@@ -57,6 +57,25 @@ class ControllerDecision(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
     valid_until: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
     response_json: Mapped[str] = mapped_column(Text, nullable=False)
+
+
+class SuppressionRecord(Base):
+    __tablename__ = "suppression_records"
+    contact_hash: Mapped[str] = mapped_column(String(64), primary_key=True)
+    reason: Mapped[str] = mapped_column(String(120), nullable=False)
+    active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+
+
+class ReadinessManifestRecord(Base):
+    __tablename__ = "readiness_manifests"
+    id: Mapped[str] = mapped_column(String(64), primary_key=True)
+    attempt_id: Mapped[str] = mapped_column(String(36), nullable=False, index=True)
+    bot_id: Mapped[str] = mapped_column(String(16), nullable=False)
+    payload_json: Mapped[str] = mapped_column(Text, nullable=False)
+    signature: Mapped[str] = mapped_column(String(64), nullable=False, unique=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    valid_until: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
 
 
 def make_session_factory(

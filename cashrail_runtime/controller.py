@@ -110,6 +110,8 @@ def evaluate_action(
     required_gates = set("ABCDEF")
     if set(context.gates) != required_gates or not all(context.gates.values()):
         return ControllerDisposition("FROZEN", "READINESS_GATE_FAILED")
+    if context.action not in policy.allowed_actions:
+        return ControllerDisposition("STOPPED", "OUTSIDE_STANDING_POLICY")
     if not all(
         (
             context.suppression_clear,
@@ -121,8 +123,6 @@ def evaluate_action(
         return ControllerDisposition("FROZEN", "ACTION_SAFETY_GATE_FAILED")
     if context.jev.policy_version != policy.version:
         return ControllerDisposition("FROZEN", "POLICY_VERSION_MISMATCH")
-    if context.action not in policy.allowed_actions:
-        return ControllerDisposition("STOPPED", "OUTSIDE_STANDING_POLICY")
     if context.jev.selected_action != "PURSUE":
         return ControllerDisposition("STOPPED", f"JEV_{context.jev.reason_code}")
     return ControllerDisposition("APPROVED", "STANDING_POLICY_AND_JEV_PASS")

@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark">
+    <title>Cashrail Control Room</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Cashrail control room</p>
+          <h1>See the whole tournament in one glance.</h1>
+          <p class="lede">Find work → check it → do the safe step → confirm the money → pass or stop.</p>
+        </div>
+        <div class="top-actions">
+          <button class="button button--quiet" id="refresh" type="button">Refresh status</button>
+          <button class="button button--signal" id="walkthrough" type="button">Show me how it works</button>
+        </div>
+      </header>
+
+      <section class="truth-banner" aria-labelledby="truth-title">
+        <div class="signal signal--stop" aria-hidden="true">■</div>
+        <div>
+          <p class="eyebrow" id="source-label">Current Bot 1 report</p>
+          <h2 id="truth-title">Bot 1 is staged—not ready to run.</h2>
+          <p id="truth-copy">The original report found 12 blockers. Code controls are hardened; real-world proof is still missing. Nothing has been sent, charged, signed, or started.</p>
+        </div>
+        <div class="status-stack">
+          <span class="status status--stop" id="readiness-status">NOT READY</span>
+          <span class="timestamp" id="updated-at">Last report: 3:17 PM</span>
+        </div>
+      </section>
+
+      <section class="rail-section" aria-labelledby="rail-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">The tournament line</p>
+            <h2 id="rail-title">Six bots. One runs at a time.</h2>
+          </div>
+          <p>Cashrail Controller checks every stop. Jev advises. Neither sends you routine approvals.</p>
+        </div>
+        <ol class="bot-rail" id="bot-rail">
+          <li class="bot bot--current" data-bot="1">
+            <span class="station">1</span><strong>Security review</strong><small>STAGED</small>
+          </li>
+          <li class="bot" data-bot="2"><span class="station">2</span><strong>Invoice recovery</strong><small>WAITING</small></li>
+          <li class="bot" data-bot="3"><span class="station">3</span><strong>Accessibility</strong><small>WAITING</small></li>
+          <li class="bot" data-bot="4"><span class="station">4</span><strong>Missed calls</strong><small>WAITING</small></li>
+          <li class="bot" data-bot="5"><span class="station">5</span><strong>Cloud savings</strong><small>WAITING</small></li>
+          <li class="bot" data-bot="6"><span class="station">6</span><strong>RFP response</strong><small>WAITING</small></li>
+        </ol>
+      </section>
+
+      <div class="content-grid">
+        <section class="panel" aria-labelledby="now-title">
+          <p class="eyebrow">What is happening now</p>
+          <h2 id="now-title">Bot 1 is checking whether it is safe and profitable.</h2>
+          <div class="simple-flow" aria-label="Bot 1 readiness flow">
+            <div class="flow-step flow-step--done"><span>✓</span><b>Packet opened</b></div>
+            <div class="flow-arrow" aria-hidden="true">→</div>
+            <div class="flow-step flow-step--active"><span>…</span><b>Readiness check</b></div>
+            <div class="flow-arrow" aria-hidden="true">→</div>
+            <div class="flow-step"><span>○</span><b>Controller decision</b></div>
+          </div>
+          <p class="plain-answer"><strong>Plain answer:</strong> Bot 1 is doing homework. It cannot start the 72-hour clock until every required check passes.</p>
+        </section>
+
+        <section class="panel money-panel" aria-labelledby="money-title">
+          <p class="eyebrow">Money that actually counts</p>
+          <h2 id="money-title"><span id="verified-profit">$0</span> verified profit</h2>
+          <p>Draft prices and possible deals do not count. Cashrail only counts money after the payment provider confirms it cleared and every cost is deducted.</p>
+          <div class="money-rule"><span aria-hidden="true">✓</span> Provider-confirmed only</div>
+        </section>
+      </div>
+
+      <section class="panel blockers" aria-labelledby="blockers-title">
+        <div class="section-heading">
+          <div><p class="eyebrow">Why Bot 1 stopped</p><h2 id="blockers-title">The 12 original blockers, grouped simply.</h2></div>
+          <span class="status status--attention">0 of 6 gates passed</span>
+        </div>
+        <div class="blocker-grid">
+          <article><span>1</span><h3>Signing control fixed</h3><p>The Controller can sign, but only after every gate truly passes.</p></article>
+          <article><span>2</span><h3>Reviewer still needed</h3><p>Delivery routing is assigned. Independent security capacity is not.</p></article>
+          <article><span>3</span><h3>Money math is unknown</h3><p>Real costs, capacity, and deposit numbers are still missing.</p></article>
+          <article><span>4</span><h3>No qualified customer</h3><p>The strongest public signal scored only 42 out of 100.</p></article>
+          <article><span>5</span><h3>Live payment proof missing</h3><p>The synthetic path works. Cashrail Stripe still needs authentication and read-back.</p></article>
+          <article><span>6</span><h3>Outreach is not authorized</h3><p>Bot 1 may research and draft, but it may not send.</p></article>
+        </div>
+        <p class="blocker-note">Code controls are now in place for signing, delivery routing, suppression, and synthetic payment testing. The remaining cards need real people, real costs, real customers, provider proof, or explicit authority.</p>
+      </section>
+
+      <section class="panel walkthrough" id="walkthrough-panel" aria-labelledby="walkthrough-title" hidden>
+        <p class="eyebrow">Sample walkthrough—not live activity</p>
+        <h2 id="walkthrough-title">How one safe opportunity moves</h2>
+        <ol class="walkthrough-steps">
+          <li><span>1</span><b>Find</b><p>Bot finds a real business problem.</p></li>
+          <li><span>2</span><b>Check</b><p>Controller checks proof, permission, cost, and safety.</p></li>
+          <li><span>3</span><b>Choose</b><p>Jev recommends pursue, review, or stop.</p></li>
+          <li><span>4</span><b>Work</b><p>The bot performs only the approved step.</p></li>
+          <li><span>5</span><b>Confirm</b><p>Provider records—not promises—confirm what happened.</p></li>
+          <li><span>6</span><b>Count</b><p>Cashrail subtracts every cost and counts verified profit.</p></li>
+        </ol>
+      </section>
+
+      <footer>
+        <p><strong>You are watching, not operating.</strong> Cashrail Controller runs the gates. Out-of-policy work stops automatically.</p>
+        <p class="runtime-state" id="runtime-state" role="status" aria-live="polite">Checking Cashrail…</p>
+      </footer>
+    </main>
+    <script src="app.js" defer></script>
+  </body>
+</html>

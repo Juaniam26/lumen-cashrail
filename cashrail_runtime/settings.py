@@ -15,6 +15,9 @@ class Settings(BaseSettings):
     controller_allowed_actions: str = (
         "PUBLIC_RESEARCH,INTERNAL_SCORING,DRAFT_OUTREACH,DRAFT_PROPOSAL"
     )
+    delivery_owner: str = "cashrail-delivery-orchestrator"
+    security_review_owner: str = "cashrail-security-review-queue"
+    security_review_capacity: int = Field(default=0, ge=0)
 
     @property
     def allowed_controller_actions(self) -> frozenset[str]:

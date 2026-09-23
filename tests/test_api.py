@@ -37,6 +37,20 @@ def test_controller_status_names_cashrail_and_excludes_user_from_runtime(tmp_pat
     }
 
 
+def test_control_room_is_served_and_snapshot_leaks_no_secrets(tmp_path) -> None:
+    api = client(tmp_path)
+    page = api.get("/control-room/")
+    snapshot = api.get("/v1/control-room/snapshot")
+
+    assert page.status_code == 200
+    assert "Cashrail Control Room" in page.text
+    assert snapshot.status_code == 200
+    assert snapshot.json()["controller"]["name"] == "Cashrail Autonomous Controller"
+    assert snapshot.json()["controller"]["user_in_runtime_chain"] is False
+    assert "token" not in snapshot.text.lower()
+    assert "secret" not in snapshot.text.lower()
+
+
 def test_controller_endpoints_require_authentication(tmp_path) -> None:
     response = client(tmp_path).post("/v1/attempts", json={"bot_id": "bot_1"})
     assert response.status_code == 401
@@ -206,3 +220,139 @@ def test_autonomous_controller_stops_out_of_policy_without_user_escalation(tmp_p
     assert response.status_code == 201
     assert response.json()["disposition"] == "STOPPED"
     assert response.json()["escalation_target"] is None
+
+
+def test_external_action_cannot_bypass_server_suppression_registry(tmp_path) -> None:
+    api = client(tmp_path)
+    contact_hash = "a" * 64
+    suppress = api.post(
+        "/v1/suppressions",
+        headers=auth() | {"Idempotency-Key": "suppress-contact-1"},
+        json={"contact_hash": contact_hash, "reason": "do-not-contact"},
+    )
+    assert suppress.status_code == 201
+
+    settings = api.app.state.settings
+    settings.controller_allowed_actions += ",SEND_OUTREACH"
+    payload = {
+        "action": "SEND_OUTREACH",
+        "contact_hash": contact_hash,
+        "gates": {key: True for key in "ABCDEF"},
+        "suppression_clear": True,
+        "authority_verified": True,
+        "evidence_fresh": True,
+        "security_clear": True,
+        "jev_inputs": {
+            "opportunity_id": "opp-suppressed",
+            "collection_probability": 0.9,
+            "expected_verified_profit": 1_500_000,
+            "remaining_action_hours": 10,
+            "delivery_capacity": True,
+            "reviewer_capacity": True,
+            "approved_deposit": False,
+            "evidence_complete": True,
+            "policy_version": "cashrail-v1",
+            "economics_version": "economics-v1",
+        },
+    }
+    decision = api.post(
+        "/v1/controller/evaluate",
+        headers=auth() | {"Idempotency-Key": "suppressed-decision-1"},
+        json=payload,
+    )
+    assert decision.status_code == 201
+    assert decision.json()["disposition"] == "FROZEN"
+    assert decision.json()["reason_code"] == "ACTION_SAFETY_GATE_FAILED"
+
+
+def test_controller_signing_endpoint_refuses_failed_gates(tmp_path) -> None:
+    api = client(tmp_path)
+    created = api.post(
+        "/v1/attempts",
+        headers=auth() | {"Idempotency-Key": "attempt-for-failed-signature"},
+        json={"bot_id": "bot_1"},
+    ).json()
+    response = api.post(
+        "/v1/readiness/sign",
+        headers=auth() | {"Idempotency-Key": "failed-manifest-signature"},
+        json={
+            "attempt_id": created["attempt_id"],
+            "bot_id": "bot_1",
+            "gates": {key: False for key in "ABCDEF"},
+            "blockers": ["B01"],
+            "policy_version": "cashrail-v1",
+            "clock_ready": False,
+        },
+    )
+    assert response.status_code == 409
+
+
+def test_suppression_duplicate_contact_is_safe_with_a_new_key(tmp_path) -> None:
+    api = client(tmp_path)
+    payload = {"contact_hash": "a" * 64, "reason": "opt-out"}
+    first = api.post(
+        "/v1/suppressions",
+        headers=auth() | {"Idempotency-Key": "suppression-first-key"},
+        json=payload,
+    )
+    second = api.post(
+        "/v1/suppressions",
+        headers=auth() | {"Idempotency-Key": "suppression-second-key"},
+        json=payload | {"reason": "do-not-contact"},
+    )
+
+    assert first.status_code == 201
+    assert second.status_code == 200
+    mismatch = api.post(
+        "/v1/suppressions",
+        headers=auth() | {"Idempotency-Key": "suppression-second-key"},
+        json={"contact_hash": "b" * 64, "reason": "different"},
+    )
+    assert mismatch.status_code == 409
+
+
+def test_controller_refuses_manifest_for_stale_policy(tmp_path) -> None:
+    api = client(tmp_path)
+    created = api.post(
+        "/v1/attempts",
+        headers=auth() | {"Idempotency-Key": "attempt-for-stale-policy"},
+        json={"bot_id": "bot_1"},
+    ).json()
+    response = api.post(
+        "/v1/readiness/sign",
+        headers=auth() | {"Idempotency-Key": "stale-policy-signature"},
+        json={
+            "attempt_id": created["attempt_id"],
+            "bot_id": "bot_1",
+            "gates": {key: True for key in "ABCDEF"},
+            "blockers": [],
+            "policy_version": "cashrail-old",
+            "clock_ready": True,
+        },
+    )
+
+    assert response.status_code == 409
+
+
+def test_controller_signs_complete_manifest_durably_and_idempotently(tmp_path) -> None:
+    api = client(tmp_path)
+    created = api.post(
+        "/v1/attempts",
+        headers=auth() | {"Idempotency-Key": "attempt-for-signature"},
+        json={"bot_id": "bot_1"},
+    ).json()
+    payload = {
+        "attempt_id": created["attempt_id"],
+        "bot_id": "bot_1",
+        "gates": {key: True for key in "ABCDEF"},
+        "blockers": [],
+        "policy_version": "cashrail-v1",
+        "clock_ready": True,
+    }
+    headers = auth() | {"Idempotency-Key": "complete-manifest-signature"}
+    first = api.post("/v1/readiness/sign", headers=headers, json=payload)
+    replay = api.post("/v1/readiness/sign", headers=headers, json=payload)
+
+    assert first.status_code == 201
+    assert replay.status_code == 200
+    assert first.json()["signature"] == replay.json()["signature"]

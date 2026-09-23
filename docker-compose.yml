@@ -1,0 +1,39 @@
+services:
+  api:
+    build: .
+    read_only: true
+    tmpfs: [/tmp]
+    ports: ["127.0.0.1:8000:8000"]
+    environment:
+      CASHRAIL_DATABASE_URL: postgresql+psycopg://cashrail:${POSTGRES_PASSWORD}@db/cashrail
+      CASHRAIL_CONTROLLER_TOKEN: ${CASHRAIL_CONTROLLER_TOKEN}
+      CASHRAIL_ENABLE_LIVE_EXECUTION: "false"
+      CASHRAIL_STRIPE_WEBHOOK_SECRET: ${CASHRAIL_STRIPE_WEBHOOK_SECRET}
+      CASHRAIL_ENVIRONMENT: production
+      CASHRAIL_AUTO_CREATE_SCHEMA: "false"
+      CASHRAIL_CONTROLLER_POLICY_VERSION: cashrail-v1
+      CASHRAIL_CONTROLLER_ALLOWED_ACTIONS: PUBLIC_RESEARCH,INTERNAL_SCORING,DRAFT_OUTREACH,DRAFT_PROPOSAL
+      CASHRAIL_DELIVERY_OWNER: cashrail-delivery-orchestrator
+      CASHRAIL_SECURITY_REVIEW_OWNER: cashrail-security-review-queue
+      CASHRAIL_SECURITY_REVIEW_CAPACITY: "0"
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+  db:
+    image: postgres:18.3@sha256:7e32e9833a6fb1c92c32552794cb6ed569d51b445a54907d35fc112ef39684db
+    environment:
+      POSTGRES_DB: cashrail
+      POSTGRES_USER: cashrail
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes: ["cashrail_db:/var/lib/postgresql/data"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cashrail -d cashrail"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+    restart: unless-stopped
+volumes:
+  cashrail_db:
